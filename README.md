@@ -150,6 +150,7 @@ This model tracks every financial transaction (either income or expenditure):
 - balance (Integer, automatically updated)
 - last_updated (date, automatically changed)
 
+<br>
 
 ### Entity Relationship Diagram 🔷
 
