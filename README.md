@@ -93,7 +93,7 @@ Fields for managing user accounts:
 
 <br>
 
-**2. SavingGoal Model**
+**2. Goal Model**
 
 This model tracks the user’s goals and their progress:
 
@@ -154,7 +154,7 @@ This model tracks every financial transaction (either income or expenditure):
 
 ### Entity Relationship Diagram 🔷
 
-(Will insert the img later)
+![ERD image](main_app/static/images/erd.png)
 
 <br>
 

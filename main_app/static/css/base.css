@@ -1,0 +1,149 @@
+
+/* static/css/base.css */
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+/* Navbar Style */
+header {
+  background-color: #008080; /* Teal background */
+  position: sticky;
+  top: 0; /* Ensure the header stays at the top*/
+  padding: 20px;
+  display: flex;
+  justify-content: space-between; /* Space between logo and links */
+  align-items: center;
+}
+
+header .header-logo-container img {
+  height: 40px; /* Logo size */
+}
+
+header nav ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+header nav ul li {
+  margin-left: 30px;
+}
+
+header nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+}
+
+header nav ul li a:hover {
+  background-color: white;
+  color: #008080;
+}
+
+/* Logout button */
+header .logout-button {
+  background-color: #008080;
+  color: white;
+  font-size: 20px;
+  padding: 8px 16px;
+  font-weight: 700;
+  border: 2px solid white;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+header .logout-button:hover {
+  border: 2px solid white;
+  background-color: white;
+  color: #008080;
+}
+
+/* footer styling */
+footer {
+  background-color: #008080; /* Teal background */
+  color: white;
+  padding: 30px;
+  display: flex;
+  justify-content: center; /* Center the footer content */
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+footer .footer-content {
+  width: 100%;
+  max-width: 1200px; /* Optional: maximum width for better spacing */
+  text-align: center; /* Center the text */
+}
+
+footer h3 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+footer p {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+footer .social-icons {
+  display: flex;
+  justify-content: center; /* Center the social icons */
+  gap: 10px;
+}
+
+footer .social-icons a {
+  margin-top: 10px;
+  text-decoration: none;
+  color: white;
+  font-size: 20px;
+}
+
+footer .social-icons a:hover {
+  color: #ffb84d; /* Hover effect for social icons */
+}
+
+footer .footer-button {
+  background-color: #ffffff;
+  color: #008080;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+footer .footer-button:hover {
+  background-color: #ffb84d;
+}
+
+footer .footer-right p {
+  font-size: 12px;
+  margin-top: 20px;
+}
+
+footer .footer-right p a {
+  color: white;
+  text-decoration: none;
+}
+
+footer .footer-right p a:hover {
+  text-decoration: underline;
+}
+
+
+/*styling the main*/
+
+main{
+    min-height: 650px; /*Very important, ensures there is space between header and footer even if the main is blank*/
+}
