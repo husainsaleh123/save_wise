@@ -21,14 +21,14 @@
       <img src="{% static 'images/logo.png' %}" alt="SaveWise logo" />
     </a>
   </div>
-  <nav>
-    <ul>
-      <li><a href="/home">Home</a></li>
-      <li><a href="/goals">Goals</a></li>
-      <li><a href="/transactions">Transactions</a></li>
-      <li><a href="/accounts">Accounts</a></li>
-    </ul>
-  </nav>
+ <nav>
+  <ul>
+    <li class="{% if request.path == '/home/' %}active{% endif %}"><a href="{% url 'home' %}">Home</a></li>
+    <li class="{% if request.path == '/goals/' %}active{% endif %}"><a href="{% url 'goal-index' %}">Goals</a></li>
+    <li class="{% if request.path == '/transactions/' %}active{% endif %}"><a href="{% url 'home'  %}">Transactions</a></li>
+    <li class="{% if request.path == '/accounts/' %}active{% endif %}"><a href="{% url 'home'  %}">Accounts</a></li>
+  </ul>
+</nav>
   <button class="logout-button">Logout</button>
 </header>
     <main>

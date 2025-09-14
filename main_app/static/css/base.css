@@ -45,10 +45,15 @@ header nav ul li a {
   transition: background-color 0.3s ease;
 }
 
-header nav ul li a:hover {
-  background-color: white;
+/* Highlight active page in the menu */
+
+header nav ul li.active a{
+  font-weight: 600;
   color: #008080;
+  border: 2px solid white;
+  background-color: rgb(255, 255, 255);
 }
+
 
 /* Logout button */
 header .logout-button {
@@ -68,6 +73,8 @@ header .logout-button:hover {
   background-color: white;
   color: #008080;
 }
+
+
 
 /* footer styling */
 footer {
