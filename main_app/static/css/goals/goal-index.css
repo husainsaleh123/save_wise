@@ -15,12 +15,7 @@
   gap: 18px;
   width: 80%;
   margin: 20px auto;
-
-}
-
-.card-container a{
-  overflow: hidden;
-  z-index: -9999;
+  z-index: -1;
 }
 
 /* Card */
@@ -34,8 +29,8 @@
   padding: 18px;
   box-shadow: 0 2px 0 rgba(0,0,0,0.04);
   overflow: hidden; /* Ensure content doesn't overflow */
+  z-index: -1;
   margin-bottom: 12px;
-  z-index: -9999;
 }
 
 
@@ -56,6 +51,7 @@
   flex-direction: column;
   gap: 12px;
   flex-wrap: wrap;  /* Allow wrap to prevent overflow */
+  z-index: 0; 
 }
 
 .card-container a{
@@ -72,6 +68,7 @@
   gap: 15px;
   background-color:#def6f6;
   flex-wrap: wrap;  /* Allow wrap to prevent overflow */
+  z-index: 0;
   color: #000000;
 }
 

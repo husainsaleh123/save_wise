@@ -17,6 +17,7 @@ header {
   display: flex;
   justify-content: space-between; /* Space between logo and links */
   align-items: center;
+  z-index: 1;
 }
 
 header .header-logo-container img {

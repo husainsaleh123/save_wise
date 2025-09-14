@@ -12,4 +12,38 @@
   <p><strong>Status:</strong> {{ goal.status }}</p>
   <p><strong>Target Date:</strong> {{ goal.target_date }}</p>
 </section>
+
+<section class="card-container">
+  <article class="goal-card">
+    <div class="goal-thumb" aria-hidden="true"></div>
+    <div class="goal-info">
+      <header class="goal-top">
+        <h2 class="goal-title">{{ goal.name }}</h2>
+        <span class="date-chip">
+          {{ goal.target_date|date:"n/j/Y" }}
+        </span>
+      </header>
+
+      <div class="goal-status">
+        <span class="dot"></span>
+        <span class="status-text">{{ goal.status }}</span>
+      </div>
+
+      <p class="goal-desc">
+        {{ goal.description }}
+      </p>
+
+      <p class="amount-row">
+        <strong>Amount saved:</strong>
+        <span>{{ goal.amount_saved|floatformat:0 }}/{{ goal.target_amount|floatformat:0 }}</span>
+      </p>
+
+      <div class="progress">
+        <div class="progress-fill"></div>
+        <span class="progress-pill">
+          {{ goal.progress }}%
+        </span>
+      </div>
+    </div>
+  </article>
 {% endblock %}

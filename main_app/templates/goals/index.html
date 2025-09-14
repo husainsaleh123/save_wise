@@ -1,53 +1,51 @@
-<!-- templates/goals/index.html -->
+{% extends 'base.html' %}
+{% load static %}
 
-{% extends 'base.html' %} {% load static %} {% block head %}
-  {# ADDED: timestamp query to bust cache #}
-  {% now "U" as ts %}
+{% block head %}
   <link rel="stylesheet" href="{% static 'css/goals/goal-index.css' %}">
-{% endblock %} {% block content %}
+{% endblock %}
 
-
+{% block content %}
 <section class="page-header">
-  <h1>Goalssss List</h1>
+  <h1>Goal List</h1>
 </section>
 
 <section class="card-container">
   {% for goal in goals %}
   <a href="/goals/{{ goal.id }}">
-  <article class="goal-card">
-    <div class="goal-thumb" aria-hidden="true"></div>
-    <div class="goal-info">
-      <header class="goal-top">
-        <h2 class="goal-title">{{ goal.name }}</h2>
-        <span class="date-chip">
-          {{ goal.target_date|date:"n/j/Y" }}
-        </span>
-      </header>
+    <article class="goal-card">
+      <div class="goal-thumb" aria-hidden="true"></div>
+      <div class="goal-info">
+        <header class="goal-top">
+          <h2 class="goal-title">{{ goal.name }}</h2>
+          <span class="date-chip">
+            {{ goal.target_date|date:"n/j/Y" }}
+          </span>
+        </header>
 
-      <div class="goal-status">
-        <span class="dot"></span>
-        <span class="status-text">{{ goal.status }}</span>
+        <div class="goal-status">
+          <span class="dot"></span>
+          <span class="status-text">{{ goal.status }}</span>
+        </div>
+
+        <p class="goal-desc">
+          {{ goal.description }}
+        </p>
+
+        <p class="amount-row">
+          <strong>Amount saved:</strong>
+          <span>{{ goal.amount_saved|floatformat:0 }}/{{ goal.target_amount|floatformat:0 }}</span>
+        </p>
+
+        <div class="progress">
+          <div class="progress-fill"></div>
+          <span class="progress-pill">
+            {{ goal.progress }}%
+          </span>
+        </div>
       </div>
-
-      <p class="goal-desc">
-        {{ goal.description }}
-      </p>
-
-      <p class="amount-row">
-        <strong>Amount saved:</strong>
-        <span>{{ goal.amount_saved|floatformat:0 }}/{{ goal.target_amount|floatformat:0 }}</span>
-      </p>
-
-      <div class="progress">
-        <div class="progress-fill"></div>
-        <span class="progress-pill">
-          {{ goal.progress }}%
-        </span>
-      </div>
-    </div>
-  </article>
-      </a>
-
+    </article>
+  </a>
   {% empty %}
   <p class="empty">No goals yet.</p>
   {% endfor %}
