@@ -5,12 +5,11 @@
 {% endblock %} 
 {% block content %}
 <section class="goal-container">
-  <div class="goal-img">
-    <img src="{% static 'images/sk8r-boi-goal.svg' %}" alt="A skater boy cat" />
-  </div>
-  <div class="goal-details">
-    <h1>{{ goal.name }}</h1>
-    <p>{{ goal.description }}</p>
-  </div>
+  <h1>{{ goal.name }}</h1>
+  <p><strong>Description:</strong> {{ goal.description }}</p>
+  <p><strong>Target Amount:</strong> {{ goal.target_amount }}</p>
+  <p><strong>Amount Saved:</strong> {{ goal.amount_saved }}</p>
+  <p><strong>Status:</strong> {{ goal.status }}</p>
+  <p><strong>Target Date:</strong> {{ goal.target_date }}</p>
 </section>
 {% endblock %}

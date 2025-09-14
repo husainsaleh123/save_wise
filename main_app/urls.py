@@ -1,3 +1,5 @@
+#main_app/urls.py
+
 from django.urls import path
 from . import views # Import views to connect routes to view functions
 

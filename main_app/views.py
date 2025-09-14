@@ -1,6 +1,6 @@
 # main_app/views.py
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Goal
 
 # Define the home view function
@@ -17,6 +17,8 @@ def goal_index(request):
             g.progress = 0
     return render(request, 'goals/index.html', {'goals': goals})
 
+
 def goal_detail(request, goal_id):
-    goal = Goal.objects.get(id=goal_id)
+    # Fetch the specific goal using the goal_id
+    goal = get_object_or_404(Goal, id=goal_id)
     return render(request, 'goals/detail.html', {'goal': goal})

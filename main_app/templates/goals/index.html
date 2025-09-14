@@ -1,3 +1,5 @@
+<!-- templates/goals/index.html -->
+
 {% extends 'base.html' %} {% load static %} {% block head %}
   {# ADDED: timestamp query to bust cache #}
   {% now "U" as ts %}
@@ -11,9 +13,9 @@
 
 <section class="card-container">
   {% for goal in goals %}
+  <a href="/goals/{{ goal.id }}">
   <article class="goal-card">
     <div class="goal-thumb" aria-hidden="true"></div>
-
     <div class="goal-info">
       <header class="goal-top">
         <h2 class="goal-title">{{ goal.name }}</h2>
@@ -44,6 +46,8 @@
       </div>
     </div>
   </article>
+      </a>
+
   {% empty %}
   <p class="empty">No goals yet.</p>
   {% endfor %}
