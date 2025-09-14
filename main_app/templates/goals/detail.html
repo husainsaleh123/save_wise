@@ -1,0 +1,16 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/goals/goal-detail.css' %}" />
+{% endblock %} 
+{% block content %}
+<section class="goal-container">
+  <div class="goal-img">
+    <img src="{% static 'images/sk8r-boi-goal.svg' %}" alt="A skater boy cat" />
+  </div>
+  <div class="goal-details">
+    <h1>{{ goal.name }}</h1>
+    <p>{{ goal.description }}</p>
+  </div>
+</section>
+{% endblock %}

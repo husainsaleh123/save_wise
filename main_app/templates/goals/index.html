@@ -12,17 +12,41 @@
 
 <section class="card-container">
   {% for goal in goals %}
-  <div class="card">
-    <div class="card-content">
-      <h2 class="card-title">{{ goal.name }}</h2>
-      <p><small>{{ goal.description }}</small></p>
-      <p><small>{{ goal.target_amount }}</small></p>
-      <p><small>{{ goal.amount_saved }}</small></p>
-      <p><small>{{ goal.interest_rate }}</small></p>
-      <p><small>{{ goal.target_date }}</small></p>
-      <p><small>{{ goal.status }}</small></p>
+  <article class="goal-card">
+    <div class="goal-thumb" aria-hidden="true"></div>
+
+    <div class="goal-info">
+      <header class="goal-top">
+        <h2 class="goal-title">{{ goal.name }}</h2>
+        <span class="date-chip">
+          {{ goal.target_date|date:"n/j/Y" }}
+        </span>
+      </header>
+
+      <div class="goal-status">
+        <span class="dot"></span>
+        <span class="status-text">{{ goal.status }}</span>
+      </div>
+
+      <p class="goal-desc">
+        {{ goal.description }}
+      </p>
+
+      <p class="amount-row">
+        <strong>Amount saved:</strong>
+        <span>{{ goal.amount_saved|floatformat:0 }}/{{ goal.target_amount|floatformat:0 }}</span>
+      </p>
+
+      <div class="progress">
+        <div class="progress-fill" style="width: {{ goal.progress }}%;"></div>
+        <span class="progress-pill" style="left: calc({{ goal.progress }}% - 18px);">
+          {{ goal.progress }}%
+        </span>
+      </div>
     </div>
-  </div>
+  </article>
+  {% empty %}
+  <p class="empty">No goals yet.</p>
   {% endfor %}
 </section>
 

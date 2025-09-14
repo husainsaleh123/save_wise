@@ -1,7 +1,7 @@
 from django.db import models
 
 class Goal(models.Model):
-    image = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='goals/', null=True, blank=True)  # Add an image field (optional)
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=500)
     target_amount = models.FloatField()
