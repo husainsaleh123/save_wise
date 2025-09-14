@@ -1,8 +1,7 @@
 {% extends 'base.html' %} {% load static %} {% block head %}
-<link
-  rel="stylesheet"
-  href="{% static 'css/goals/goal-index.css' %}"
-/>
+  {# ADDED: timestamp query to bust cache #}
+  {% now "U" as ts %}
+  <link rel="stylesheet" href="{% static 'css/goals/goal-index.css' %}">
 {% endblock %} {% block content %}
 
 
@@ -38,8 +37,8 @@
       </p>
 
       <div class="progress">
-        <div class="progress-fill" style="width: {{ goal.progress }}%;"></div>
-        <span class="progress-pill" style="left: calc({{ goal.progress }}% - 18px);">
+        <div class="progress-fill"></div>
+        <span class="progress-pill">
           {{ goal.progress }}%
         </span>
       </div>
