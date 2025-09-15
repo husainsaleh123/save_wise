@@ -1,20 +1,62 @@
-{% extends 'base.html' %} 
-{% load static %} 
+{% extends 'base.html' %}
+{% load static %}
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/form.css' %}" />
-{% endblock %} 
+  <link rel="stylesheet" href="{% static 'css/form.css' %}" />
+{% endblock %}
 {% block content %}
 
 <div class="page-header">
-  <h1>Add a Goal</h1>
+  <h1>Turn your dreams into reality. Add a saving goal!</h1>
+  <button class="back-btn">
+      <a href="{% url 'goal-index' %}">Back to goals</a>     
+   </button>
 </div>
 
-<form action="" method="post" class="form-container">
+<form action="" method="post" class="goal-form-container">
   {% csrf_token %}
-  <table>
-    {{ form.as_table }}
-  </table>
-  <button type="submit" class="btn submit">Submit!</button>
+  <div class="form-field">
+    <label for="goal-image">Saving Goal Image</label>
+    {{ form.image }}
+  </div>
+  
+  <div class="form-field">
+    <label for="goal-title">Goal Title</label>
+    {{ form.name }}
+  </div>
+  
+  <div class="form-field">
+    <label for="goal-description">Goal Description</label>
+    {{ form.description }}
+  </div>
+
+  <div class="form-field">
+    <label for="goal-target-amount">Target Amount</label>
+    {{ form.target_amount }}
+    <small>Please enter your target amount in Bahraini Dinar.</small>
+  </div>
+
+  <div class="form-field">
+    <label for="goal-amount-saved">Amount Saved</label>
+    {{ form.amount_saved }}
+    <small>Please enter your currently saved amount in Bahraini Dinar.</small>
+  </div>
+
+  <div class="form-field">
+    <label for="goal-interest-rate">Interest Rate</label>
+    {{ form.interest_rate }}
+  </div>
+
+  <div class="form-field">
+    <label for="goal-target-date">Target Date</label>
+    {{ form.target_date }}
+  </div>
+
+  <div class="form-field">
+    <label for="goal-status">Status</label>
+    {{ form.status }}
+  </div>
+
+  <button type="submit" class="btn submit">Add Saving Goal</button>
 </form>
 
 {% endblock %}

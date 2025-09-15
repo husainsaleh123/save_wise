@@ -1,0 +1,120 @@
+/* General form styling */
+.goal-form-container {
+  width: 60%;
+  margin: 20px auto 50px;
+  padding: 20px;
+  background-color: #eef6f6;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+/* Styling for the back button */
+.page-header {
+  width: 60%;
+  text-align: left;  /* Align text to the left */
+  margin: 60px auto 30px;
+  display: flex;  /* Flexbox to align items horizontally */
+  justify-content: space-between;  /* Space between h1 and back button */
+  align-items: center;  /* Align both text and button vertically */
+}
+
+.page-header h1 {
+  font-size: 27px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0;  /* Remove margins for better alignment */
+}
+
+.page-header .back-btn {
+  background-color: #008080;  /* Teal background */
+  padding: 10px 20px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.page-header .back-btn a {
+  color: white;
+  text-decoration: none;
+}
+
+.page-header .back-btn:hover {
+  background-color: #146565;  /* Darker shade when hovering */
+}
+
+/* Form Field Styling */
+.form-field {
+  margin-bottom: 20px;
+}
+
+.form-field label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.form-field input, .form-field select, .form-field textarea {
+  margin: 0 auto;
+  width: 97%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.form-field small {
+  font-size: 12px;
+  color: #777;
+  display: block;
+  margin-top: 6px;
+}
+
+
+/* Remove border from the goal-image file input */
+.form-field input[type="file"] {
+  border: none;  /* Remove border */
+  outline: none; /* Remove any outline when focused */
+  background-color: #eef6f6; /* Ensure the background remains */
+  padding: 10px; /* Add padding for consistency */
+  font-size: 16px; /* Maintain font size */
+  width: 100%; /* Make sure it fills the width of the parent container */
+}
+
+/* Label styling for goal-image */
+form .form-field label[for="goal-image"] {
+  display: inline-block;  /* Display label as inline-block */
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+/* Submit Button */
+.btn.submit {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+  background-color: #008080;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn.submit:hover {
+  background-color: #146565;
+}
+
+@media (max-width: 560px) {
+  .goal-form-container {
+    width: 90%;
+  }
+}
