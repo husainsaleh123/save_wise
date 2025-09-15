@@ -1,7 +1,9 @@
+# main_app/models.py
 from django.db import models
+from datetime import date
 
 class Goal(models.Model):
-    image = models.ImageField(upload_to='goals/', null=True, blank=True)  # Add an image field (optional)
+    image = models.ImageField(upload_to='goal_images/', blank=True, null=True)
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=500)
     target_amount = models.FloatField()
@@ -9,7 +11,15 @@ class Goal(models.Model):
     interest_rate = models.FloatField()
     target_date = models.DateField()
     status = models.CharField(max_length=100)
+    
+     # Calculate simple interest
+    def calculate_interest(self):
+        time_period = (self.target_date - date.today()).days / 365  # Time in years
+        interest = self.target_amount * (self.interest_rate / 100) * time_period  # Simple Interest formula
+        return interest
 
     # new code below
     def __str__(self):
         return self.name
+
+

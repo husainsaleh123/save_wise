@@ -1,25 +1,29 @@
 <!-- templates/goals/detail.html -->
+{% extends 'base.html' %}
+{% load static %}
 
-{% extends 'base.html' %} 
-{% load static %} 
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/goals/goal-detail.css' %}?v={{ ts }}">
-{% endblock %} 
+  <!-- New MCDatepicker CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'css/mcdp.css' %}">
+  <!-- MCDatepicker JS -->
+  <script src="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.js"></script>
+  <script defer src="{% static 'js/goal-detail.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/goals/goal-detail.css' %}?v={{ ts }}">
+{% endblock %}
 
 {% block content %}
-<section class="page-header">
-  <h1>Details for {{ goal.name }}</h1>
-</section>
+  <section class="page-header">
+    <h1>Details for {{ goal.name }}</h1>
+  </section>
 
-<section class="goal-container">
+  <section class="goal-container">
     <article class="goal-card">
       <div class="goal-thumb" aria-hidden="true"></div>
       <div class="goal-info">
         <header class="goal-top">
           <h2 class="goal-title">{{ goal.name }}</h2>
-          <span class="date-chip">
-            {{ goal.target_date|date:"n/j/Y" }}
-          </span>
+          <span class="date-chip">{{ goal.target_date|date:"n/j/Y" }}</span>
         </header>
 
         <div class="goal-status">
@@ -27,28 +31,24 @@
           <span class="status-text">{{ goal.status }}</span>
         </div>
 
-        <p class="goal-desc">
-          {{ goal.description }}
-        </p>
-
-        <p class="amount-row">
-          <strong>Amount saved:</strong>
-          <span>{{ goal.amount_saved|floatformat:0 }}/{{ goal.target_amount|floatformat:0 }}</span>
-        </p>
+        <p class="goal-desc">{{ goal.description }}</p>
+        <p class="amount-row"><strong>Amount saved:</strong> {{ goal.amount_saved|floatformat:0 }}/{{ goal.target_amount|floatformat:0 }}</p>
+        <p class="interest-rate"><strong>Total Interest:</strong> {{ goal.calculate_interest }}</p>
 
         <div class="progress">
           <div class="progress-fill"></div>
-          <span class="progress-pill">
-            {{ goal.progress }}%
-          </span>
+          <span class="progress-pill">{{ goal.progress }}%</span>
         </div>
+
+        {% if goal.image %}
+          <img src="{{ goal.image.url }}" alt="{{ goal.name }}">
+        {% endif %}
       </div>
     </article>
-</section>
+  </section>
 
-       <div class="goal-actions">
-            <a href="{% url 'goal-update' goal.id %}" class="btn warn">Edit</a>
-            <a href="{% url 'goal-delete' goal.id %}" class="btn danger">Delete</a>
-       </div>
-
+  <div class="goal-actions">
+    <a href="{% url 'goal-update' goal.id %}" class="btn warn">Edit</a>
+    <a href="{% url 'goal-delete' goal.id %}" class="btn danger">Delete</a>
+  </div>
 {% endblock %}

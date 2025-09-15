@@ -168,6 +168,7 @@
 }
 
 .goal-view-btn {
+  font-family: 'Poppins',sans-serif;
   max-width: 15%; /* Adjust to a larger width */
   padding: 10px 20px; /* Add more padding for a larger button */
   border-radius: 12px; /* Slightly rounded corners */
@@ -175,7 +176,7 @@
   height: auto; /* Let the height adjust based on padding */
   color: white;
   font-size: 18px; /* Larger font size */
-  font-weight: 600; /* Slightly bolder text */
+  font-weight: 500; /* Slightly bolder text */
   background-color: #008080; /* Green background */
   border: none;
   transition: background-color 0.3s ease;
