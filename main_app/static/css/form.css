@@ -1,9 +1,9 @@
 /* General form styling */
 .goal-form-container {
   width: 60%;
-  margin: 20px auto 50px;
+  margin: 20px auto 80px;
   padding: 20px;
-  background-color: #eef6f6;
+  background-color: #def6f6;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
@@ -11,7 +11,7 @@
 .page-header {
   width: 60%;
   text-align: left;  /* Align text to the left */
-  margin: 60px auto 30px;
+  margin: 70px auto 50px;
   display: flex;  /* Flexbox to align items horizontally */
   justify-content: space-between;  /* Space between h1 and back button */
   align-items: center;  /* Align both text and button vertically */
@@ -25,11 +25,12 @@
 }
 
 .page-header .back-btn {
+  font-family: 'Poppins',sans-serif;
   background-color: #008080;  /* Teal background */
   padding: 10px 20px;
   color: white;
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 500;
   border-radius: 12px;
   border: none;
   cursor: pointer;
@@ -79,7 +80,7 @@
 .form-field input[type="file"] {
   border: none;  /* Remove border */
   outline: none; /* Remove any outline when focused */
-  background-color: #eef6f6; /* Ensure the background remains */
+  background-color: #def6f6; /* Ensure the background remains */
   padding: 10px; /* Add padding for consistency */
   font-size: 16px; /* Maintain font size */
   width: 100%; /* Make sure it fills the width of the parent container */
@@ -96,13 +97,14 @@ form .form-field label[for="goal-image"] {
 
 /* Submit Button */
 .btn.submit {
+  font-family: 'Poppins',sans-serif;
   margin-top: 20px;
   width: 100%;
   padding: 12px;
   background-color: #008080;
   color: white;
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 600;
   border: none;
   border-radius: 8px;
   cursor: pointer;

@@ -1,7 +1,7 @@
 # main_app/views.py
 
 from django.shortcuts import render, get_object_or_404
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Goal
 
 
@@ -31,3 +31,11 @@ def goal_detail(request, goal_id):
     return render(request, 'goals/detail.html', {'goal': goal})
 
 
+class GoalUpdate(UpdateView):
+    model = Goal
+    fields = ['image', 'name', 'description', 'target_amount', 'amount_saved','interest_rate','target_date','status']
+    success_url = '/goals/'
+
+class GoalDelete(DeleteView):
+    model = Goal
+    success_url = '/goals/'

@@ -10,6 +10,11 @@
   <button class="back-btn">
       <a href="{% url 'goal-index' %}">Back to goals</a>     
    </button>
+   {% if goal %}
+    <h1>Edit {{ goal.name }}</h1>
+  {% else %}
+    <h1>Add a Goal</h1>
+  {% endif %}
 </div>
 
 <form action="" method="post" class="goal-form-container">
@@ -56,7 +61,7 @@
     {{ form.status }}
   </div>
 
-  <button type="submit" class="btn submit">Add Saving Goal</button>
+  <button type="submit" class="btn submit">Submit Goal</button>
 </form>
 
 {% endblock %}
