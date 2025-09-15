@@ -1,0 +1,63 @@
+<!-- templates/goals/index.html -->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/goals/goal-index.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <h3>Goal List</h3>
+   <button class="add-goal-btn">
+      <a href="{% url 'goal-create' %}">+ Add goal</a>     
+   </button>
+</section>
+
+<section class="card-container">
+  {% for goal in goals %}
+    <a href="{% url 'goal-detail' goal.id %}">
+    <div class="goal-card">
+      <div class="goal-thumb" aria-hidden="true"></div>
+      <div class="goal-info">
+        <header class="goal-top">
+          <h2 class="goal-title">{{ goal.name }}</h2>
+          <span class="date-chip">
+            {{ goal.target_date|date:"n/j/Y" }}
+          </span>
+        </header>
+
+        <div class="goal-status">
+          <span class="dot"></span>
+          <span class="status-text">{{ goal.status }}</span>
+        </div>
+
+        <p class="goal-desc">
+          {{ goal.description }}
+        </p>
+
+        <p class="amount-row">
+          <strong>Amount saved:</strong>
+          <span>{{ goal.amount_saved|floatformat:0 }}/{{ goal.target_amount|floatformat:0 }}</span>
+        </p>
+
+        <div class="progress">
+          <div class="progress-fill"></div>
+          <span class="progress-pill">
+            {{ goal.progress }}%
+          </span>
+        </div>
+
+          <button class="goal-view-btn">
+            View goal
+          </button>
+      </div>
+    </div>
+  </a>
+  {% empty %}
+  <p class="empty">No goals yet.</p>
+  {% endfor %}
+</section>
+
+{% endblock %}

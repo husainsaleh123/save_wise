@@ -1,0 +1,110 @@
+<!-- templates/main_app/goal_form.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/form.css' %}" />
+  <!-- New MCDatepicker CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Turn your dreams into reality. Add a saving goal!</h1>
+  <button class="back-btn">
+      <a href="{% url 'goal-index' %}">Back to goals</a>     
+  </button>
+  {% if goal %}
+    <h1>Edit {{ goal.name }}</h1>
+  {% endif %}
+</div>
+
+<form action="" method="post" class="goal-form-container" enctype="multipart/form-data">
+  {% csrf_token %}
+  
+  <div class="form-field">
+    <label for="{{ form.image.id_for_label }}">Goal Image:</label>
+    {{ form.image }}
+    {% if form.image.errors %}
+      <ul class="errorlist">
+        {% for error in form.image.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+
+  <div class="form-field">
+    <label for="goal-title">Goal Title*</label>
+    {{ form.name }}
+  </div>
+  
+  <div class="form-field">
+    <label for="goal-description">Goal Description*</label>
+    {{ form.description }}
+  </div>
+
+  <div class="form-field">
+    <label for="goal-target-amount">Target Amount*</label>
+    {{ form.target_amount }}
+    <small>Please enter your target amount in Bahraini Dinar.</small>
+  </div>
+
+  <div class="form-field">
+    <label for="goal-amount-saved">Amount Saved*</label>
+    {{ form.amount_saved }}
+    <small>Please enter your amount saved in Bahraini Dinar.</small>
+    {% if form.amount_saved.errors %}
+      <ul class="errorlist">
+        {% for error in form.amount_saved.errors %}
+          <p style="color: red;">{{ error }}</p>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+
+  <div class="form-field">
+    <label for="goal-interest-rate">Interest Rate</label>
+    {{ form.interest_rate }}
+    <small>Please enter the simple interest in percentage (Ex: 5% = 5)</small>
+  </div>
+
+  <div class="form-field">
+    <label for="goal-target-date">Target Date*</label>
+    <input type="text" id="id_date" name="target_date" value="{{ goal.target_date|date:'Y-m-d' }}" />
+    {% if form.target_date.errors %}
+      <ul class="errorlist">
+        {% for error in form.target_date.errors %}
+          <p style="color: red;">{{ error }}</p>  <!-- Red error message -->
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+
+  <div class="form-field">
+    <label for="goal-status">Status*</label>
+    {{ form.status }}
+  </div>
+
+  <button type="submit" class="btn submit">Submit Goal</button>
+</form>
+
+<script>
+  // Initialize the date picker for target_date field
+  const dateInput = document.getElementById('id_date'); // Select the date input by ID
+  if (dateInput) {
+    const picker = MCDatepicker.create({
+      el: '#id_date',
+      dateFormat: 'yyyy-mm-dd',
+      closeOnBlur: true,
+      selectedDate: new Date(), // Default to today's date
+    });
+
+    dateInput.addEventListener("click", () => {
+      picker.open();
+    });
+  }
+</script>
+
+{% endblock %}

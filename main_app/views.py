@@ -3,7 +3,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView # add these 
-from .models import Goal, Account
+from .models import Goal, Account, Transaction
 from django import forms
 from datetime import date
 
@@ -109,3 +109,25 @@ def account_list(request):
 
 class AccountDetail(DetailView):
     model = Account
+
+
+class TransactionCreate(CreateView):
+    model = Transaction
+    fields = '__all__'
+
+
+class TransactionList(ListView):
+    model = Transaction
+
+class TransactionDetail(DetailView):
+    model = Transaction
+
+class TransactionUpdate(UpdateView):
+    model = Transaction
+    fields = '__all__'
+
+
+class TransactionDelete(DeleteView):
+    model = Transaction
+    fields = '__all__'
+    success_url = '/transactions/'
