@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/form.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Accounts</h1>
+</div>
+
+<!-- Table displaying the account details dynamically -->
+<table class="account-table" style="width: 100%; border: 1px solid #ddd; border-collapse: collapse;">
+  <thead>
+    <tr>
+      <th style="padding: 12px; border: 1px solid #ddd;">Account ID</th>
+      <th style="padding: 12px; border: 1px solid #ddd;">Account Name</th>
+      <th style="padding: 12px; border: 1px solid #ddd;">Balance</th>
+      <th style="padding: 12px; border: 1px solid #ddd;">Last Updated</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Loop through the accounts and display each row -->
+    {% for account in accounts %}
+      <tr>
+        <td style="padding: 12px; border: 1px solid #ddd;">{{ account.id }}</td>
+        <td style="padding: 12px; border: 1px solid #ddd;">{{ account.name }}</td>
+        <td style="padding: 12px; border: 1px solid #ddd;">{{ account.balance }}</td>
+        <td style="padding: 12px; border: 1px solid #ddd;"> 
+          {{ account.last_updated|date:"Y-m-d" }} , {{ account.last_updated|time:"H:i:s" }}
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

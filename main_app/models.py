@@ -1,5 +1,6 @@
 # main_app/models.py
 from django.db import models
+from django.urls import reverse
 from datetime import date
 
 class Goal(models.Model):
@@ -27,11 +28,16 @@ class Goal(models.Model):
 class Account(models.Model):
     name = models.CharField(max_length=50)
     balance = models.FloatField()
-    last_updated = models.DateField()
+    last_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        # Prevent modification of "Checking" and "Savings" accounts
+        if self.name in ['Checking', 'Savings'] and self.pk is not None:
+            raise ValueError(f"The {self.name} account cannot be modified.")
+        super().save(*args, **kwargs)
+
     def get_absolute_url(self):
         return reverse('account-detail', kwargs={'pk': self.id})
-

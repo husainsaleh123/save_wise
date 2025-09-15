@@ -2,7 +2,8 @@
 
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Goal
+from django.views.generic import ListView, DetailView # add these 
+from .models import Goal, Account
 from django import forms
 from datetime import date
 
@@ -83,3 +84,28 @@ class GoalUpdate(UpdateView):
 class GoalDelete(DeleteView):
     model = Goal
     success_url = '/goals/'
+# Goal update view with restriction for "Checking" and "Savings" accounts
+class AccountUpdate(UpdateView):
+    model = Account
+    fields = ['name', 'balance', 'last_updated']
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        # Prevent modification of Checking and Savings accounts
+        if obj.name in ['Checking', 'Savings']:
+            raise ValueError(f"The {obj.name} account cannot be modified.")
+        return obj
+
+
+class GoalDelete(DeleteView):
+    model = Goal
+    success_url = '/goals/'
+
+
+def account_list(request):
+    # Fetch all accounts from the database
+    accounts = Account.objects.all()
+    return render(request, 'main_app/account_list.html', {'accounts': accounts})
+
+class AccountDetail(DetailView):
+    model = Account
