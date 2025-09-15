@@ -23,3 +23,15 @@ class Goal(models.Model):
         return self.name
 
 
+# Add the account model
+class Account(models.Model):
+    name = models.CharField(max_length=50)
+    balance = models.FloatField()
+    last_updated = models.DateField()
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('account-detail', kwargs={'pk': self.id})
+
