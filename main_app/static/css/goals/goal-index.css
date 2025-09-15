@@ -1,11 +1,20 @@
-/* Layout */
+/* static/css/goals/goal-index.css */
+
 .page-header {
-  padding: 24px 20px 10px;
-}
-.page-header h1 {
-  text-align: center;
-  font-size: 40px;
+  padding: 10px 20px 10px;
+  width: 80%;
   margin: 50px auto 10px;
+  text-align: left; /* Align text to the left */
+  display: flex;
+  justify-content: space-between; /* Space between Goal List and Add goal */
+  align-items: center; /* Align items vertically */
+}
+
+.page-header h3 {
+  font-size: 40px;
+  margin: 0; /* No margins to align better */
+  flex-grow: 1; /* Allow the title to take space */
+  color: #000;
 }
 
 /* Card grid */
@@ -55,8 +64,8 @@
 }
 
 .card-container a{
-    cursor: pointer;
     text-decoration: none;
+    cursor:auto;
 }
 
 
@@ -156,6 +165,52 @@
   background: #20c56c;
   border-radius: 999px;
   pointer-events: none;
+}
+
+.goal-view-btn {
+  max-width: 15%; /* Adjust to a larger width */
+  padding: 10px 20px; /* Add more padding for a larger button */
+  border-radius: 12px; /* Slightly rounded corners */
+  cursor: pointer;
+  height: auto; /* Let the height adjust based on padding */
+  color: white;
+  font-size: 18px; /* Larger font size */
+  font-weight: 600; /* Slightly bolder text */
+  background-color: #008080; /* Green background */
+  border: none;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.goal-view-btn:hover {
+  background-color: #146565; /* Darker shade when hovering */
+}
+
+
+
+/* Add goal button */
+.add-goal-btn {
+  padding: 10px 20px; /* Button padding */
+  background-color: #008080; /* Green background */
+  color: white;
+  font-size: 18px; /* Same font size as title */
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  height: 40px; /* Adjust the height */
+  line-height: 1; /* Align button text vertically */
+  margin-left: 20px; /* Space between text and button */
+}
+
+.add-goal-btn:hover {
+  background-color: #146565; /* Darker green on hover */
+}
+
+.add-goal-btn a {
+  color: white;
+  text-decoration: none;
 }
 
 /* Empty state */

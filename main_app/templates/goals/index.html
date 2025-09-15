@@ -1,3 +1,5 @@
+<!-- templates/goals/index.html -->
+
 {% extends 'base.html' %}
 {% load static %}
 
@@ -7,13 +9,16 @@
 
 {% block content %}
 <section class="page-header">
-  <h1>Goal List</h1>
+  <h3>Goal List</h3>
+   <button class="add-goal-btn">
+      <a href="{% url 'goal-create' %}">+ Add goal</a>     
+   </button>
 </section>
 
 <section class="card-container">
   {% for goal in goals %}
-  <a href="/goals/{{ goal.id }}">
-    <article class="goal-card">
+    <a href="{% url 'goal-detail' goal.id %}">
+    <div class="goal-card">
       <div class="goal-thumb" aria-hidden="true"></div>
       <div class="goal-info">
         <header class="goal-top">
@@ -43,8 +48,12 @@
             {{ goal.progress }}%
           </span>
         </div>
+
+          <button class="goal-view-btn">
+            View goal
+          </button>
       </div>
-    </article>
+    </div>
   </a>
   {% empty %}
   <p class="empty">No goals yet.</p>

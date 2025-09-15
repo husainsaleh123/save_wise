@@ -1,7 +1,14 @@
 # main_app/views.py
 
 from django.shortcuts import render, get_object_or_404
+from django.views.generic.edit import CreateView
 from .models import Goal
+
+
+class GoalCreate(CreateView):
+    model = Goal
+    fields = ['image', 'name', 'description', 'target_amount', 'amount_saved','interest_rate','target_date','status']
+    success_url = '/goals/'
 
 # Define the home view function
 def home(request):
@@ -22,3 +29,5 @@ def goal_detail(request, goal_id):
     # Fetch the specific goal using the goal_id
     goal = get_object_or_404(Goal, id=goal_id)
     return render(request, 'goals/detail.html', {'goal': goal})
+
+
