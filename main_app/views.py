@@ -109,7 +109,14 @@ class TransactionCreate(CreateView):
     success_url = '/transactions/'  # Redirect to the transaction list after successful creation
 
     def form_valid(self, form):
-        return super().form_valid(form)  # This will automatically update the balance
+            try:
+                form.save()  # This will call the model's save() method
+            except ValueError as e:
+                form.add_error('saving_amount', str(e))  # Add error to saving_amount field
+                form.add_error('checking_amount', str(e))  # Add error to checking_amount field
+                return self.form_invalid(form)  # Redisplay the form with errors
+            return super().form_valid(form)
+            
     
 # Add other views like TransactionList, TransactionDetail, etc.
 
@@ -130,7 +137,14 @@ class TransactionUpdate(UpdateView):
     success_url = '/transactions/'  # Redirect to the transaction list after successful update
 
     def form_valid(self, form):
-        return super().form_valid(form)  # This will automatically update the balance
+            try:
+                form.save()  # This will call the model's save() method
+            except ValueError as e:
+                form.add_error('saving_amount', str(e))  # Add error to saving_amount field
+                form.add_error('checking_amount', str(e))  # Add error to checking_amount field
+                return self.form_invalid(form)  # Redisplay the form with errors
+            return super().form_valid(form)
+            
     
 
 class TransactionDelete(DeleteView):
