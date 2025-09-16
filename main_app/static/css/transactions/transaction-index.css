@@ -1,0 +1,232 @@
+/* static/css/goals/goal-index.css */
+
+.page-header {
+  padding: 10px 20px 10px;
+  width: 80%;
+  margin: 50px auto 10px;
+  text-align: left; /* Align text to the left */
+  display: flex;
+  justify-content: space-between; /* Space between Goal List and Add goal */
+  align-items: center; /* Align items vertically */
+}
+
+.page-header h3 {
+  font-size: 40px;
+  margin: 0; /* No margins to align better */
+  flex-grow: 1; /* Allow the title to take space */
+  color: #000;
+}
+
+/* Card grid */
+.card-container {
+  padding: 16px 20px 48px;
+  display: grid;
+  gap: 18px;
+  width: 80%;
+  margin: 20px auto;
+  z-index: -1;
+}
+
+/* Card */
+.transaction-card {
+  display: grid;
+  grid-template-columns: 180px 1fr;  /* Image column adjusted */
+  gap: 50px;  /* Increased gap between image and content */
+  background: #def6f6;
+  border: 1.5px solid #cdeeee;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.04);
+  overflow: hidden; /* Ensure content doesn't overflow */
+  z-index: -1;
+  margin-bottom: 12px;
+}
+
+
+/* Thumbnail (placeholder block) */
+.transaction-thumb {
+  width: 180px;
+  height: 180px;
+  border-radius: 14px;
+  background: #d3d6db;
+  object-fit: cover;  /* Ensure the image is proportionally fitting */
+  margin-right: 15px;  /* Add a bit more gap between the image and text */
+}
+
+
+/* Right side */
+.transaction-info { 
+  display: flex; 
+  flex-direction: column;
+  gap: 12px;
+  flex-wrap: wrap;  /* Allow wrap to prevent overflow */
+  z-index: 0; 
+}
+
+.card-container a{
+    text-decoration: none;
+    cursor:auto;
+}
+
+
+/* Top row: title + date chip */
+.goal-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  background-color:#def6f6;
+  flex-wrap: wrap;  /* Allow wrap to prevent overflow */
+  z-index: 0;
+  color: #000000;
+}
+
+.goal-title {
+  font-size: 24px;
+  margin: 0;
+  flex-grow: 1; /* Allow title to take up remaining space */
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+.date-chip {
+  font-size: 16px;
+  padding: 6px 12px;
+  border: 1.6px solid #1f2a2a;
+  border-radius: 14px;
+  font-weight: 700;
+  background: #eef6f6;
+  color: #1f2a2a;
+  white-space: nowrap;
+}
+
+/* Status line */
+.goal-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #1f2a2a;
+  font-weight: 600;
+}
+
+.goal-status .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ff9900;              /* green dot */
+}
+.status-text { font-weight: 600; }
+
+/* Description */
+.goal-desc {
+  margin: 0;
+  color: #5c6a6a;
+  font-style: italic;
+}
+
+/* Amount row */
+.amount-row {
+  color: #1f2a2a;
+  margin: 0;
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+.amount-row strong { font-weight: 700; }
+
+/* Progress bar */
+.progress {
+  position: relative;
+  height: 18px;
+  background: #ffffff;
+  border-radius: 999px;
+  border: 1px solid #e6e6e6;
+  overflow: hidden;
+  margin-top: 6px;
+  margin-bottom: 10px;
+}
+.progress-fill {
+  height: 100%;
+  background: #20c56c;              /* green fill */
+  border-radius: inherit;
+  transition: width 280ms ease;
+}
+.progress-pill {
+  position: absolute;
+  top: -26px;
+  min-width: 36px;
+  height: 22px;
+  padding: 0 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+  background: #20c56c;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.goal-view-btn {
+  font-family: 'Poppins',sans-serif;
+  max-width: 15%; /* Adjust to a larger width */
+  padding: 10px 20px; /* Add more padding for a larger button */
+  border-radius: 12px; /* Slightly rounded corners */
+  cursor: pointer;
+  height: auto; /* Let the height adjust based on padding */
+  color: white;
+  font-size: 18px; /* Larger font size */
+  font-weight: 500; /* Slightly bolder text */
+  background-color: #008080; /* Green background */
+  border: none;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.goal-view-btn:hover {
+  background-color: #146565; /* Darker shade when hovering */
+}
+
+
+
+/* Add goal button */
+.add-transaction-btn {
+  padding: 10px 20px; /* Button padding */
+  background-color: #008080; /* Green background */
+  color: white;
+  font-size: 18px; /* Same font size as title */
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  height: 40px; /* Adjust the height */
+  line-height: 1; /* Align button text vertically */
+  margin-left: 20px; /* Space between text and button */
+}
+
+.add-transaction-btn:hover {
+  background-color: #146565; /* Darker green on hover */
+}
+
+.add-transaction-btn a {
+  color: white;
+  text-decoration: none;
+}
+
+/* Empty state */
+.empty {
+  color: #556;
+  opacity: .8;
+  padding: 12px 4px;
+}
+
+/* Responsive tweak */
+@media (max-width: 560px) {
+  .goal-card {
+    grid-template-columns: 72px 1fr;
+    padding: 14px;
+  }
+  .goal-thumb { width: 72px; height: 72px; }
+  .goal-title { font-size: 20px; }
+}

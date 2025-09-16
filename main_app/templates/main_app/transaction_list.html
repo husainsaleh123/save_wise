@@ -1,62 +1,65 @@
-<!-- templates/goals/index.html -->
+<!-- templates/main_app/transaction_list.html -->
 
 {% extends 'base.html' %}
 {% load static %}
 
 {% block head %}
-  <link rel="stylesheet" href="{% static 'css/goals/goal-index.css' %}">
+  <link rel="stylesheet" href="{% static 'css/transactions/transaction-index.css' %}">
 {% endblock %}
 
 {% block content %}
 <section class="page-header">
-  <h3>Goal List</h3>
-   <button class="add-goal-btn">
-      <a href="{% url 'goal-create' %}">+ Add goal</a>     
+  <h3>Transaction List</h3>
+   <button class="add-transaction-btn">
+      <a href="{% url 'transaction-create' %}">+ Add transaction</a>     
    </button>
 </section>
 
 <section class="card-container">
-  {% for goal in goals %}
-    <a href="{% url 'goal-detail' goal.id %}">
-    <div class="goal-card">
-      <div class="goal-thumb" aria-hidden="true"></div>
-      <div class="goal-info">
-        <header class="goal-top">
-          <h2 class="goal-title">{{ goal.name }}</h2>
-          <span class="date-chip">
-            {{ goal.target_date|date:"n/j/Y" }}
-          </span>
-        </header>
+  {% for transaction in transactions %}
+    <a href="{% url 'transaction-detail' transaction.id %}">
+      <div class="transaction-card">
+        <div class="transaction-thumb" aria-hidden="true"></div>
+        <div class="transaction-info">
+          <header class="transaction-top">
+            <h2 class="transaction-title">{{ transaction.name }}</h2>
+            <span class="date-chip">
+              {{ transaction.date|date:"n/j/Y" }}  <!-- Use created_at for transaction date -->
+            </span>
+          </header>
 
-        <div class="goal-status">
-          <span class="dot"></span>
-          <span class="status-text">{{ goal.status }}</span>
-        </div>
+          <div class="transaction-type">
+            <span class="dot"></span>
+            <span class="status-text">{{ transaction.transaction_type|capfirst }}</span> <!-- Income/Expenditure type -->
+          </div>
 
-        <p class="goal-desc">
-          {{ goal.description }}
-        </p>
+          <p class="transaction-desc">
+            {{ transaction.description }}
+          </p>
 
-        <p class="amount-row">
-          <strong>Amount saved:</strong>
-          <span>{{ goal.amount_saved|floatformat:0 }}/{{ goal.target_amount|floatformat:0 }}</span>
-        </p>
+          <p class="amount-row">
+            <strong>Total Amount:</strong>
+            <span>{{ transaction.amount|floatformat:0 }}</span>
+          </p>
 
-        <div class="progress">
-          <div class="progress-fill"></div>
-          <span class="progress-pill">
-            {{ goal.progress }}%
-          </span>
-        </div>
+          <p class="amount-row">
+            <strong>Savings Amount:</strong>
+            <span>{{ transaction.saving_amount|floatformat:0 }}</span>
+          </p>
 
-          <button class="goal-view-btn">
-            View goal
+          <p class="amount-row">
+            <strong>Checking Amount:</strong>
+            <span>{{ transaction.checking_amount|floatformat:0 }}</span>
+          </p>
+
+          <button class="transaction-view-btn">
+            View Transaction
           </button>
+        </div>
       </div>
-    </div>
-  </a>
+    </a>
   {% empty %}
-  <p class="empty">No goals yet.</p>
+    <p class="empty">No transactions yet.</p>
   {% endfor %}
 </section>
 

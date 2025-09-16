@@ -113,18 +113,62 @@ class AccountDetail(DetailView):
 
 class TransactionCreate(CreateView):
     model = Transaction
-    fields = '__all__'
+    fields = ['image','name', 'transaction_type', 'description', 'saving_goal', 'amount', 'saving_amount', 'checking_amount','transaction_date']
+    
+    # Override form valid method to adjust the balances
+    def form_valid(self, form):
+        # Save the transaction first
+        response = super().form_valid(form)
 
+        # Get the transaction instance
+        transaction = form.instance
+        
+        # Handle the balance changes based on transaction type
+        if transaction.transaction_type == 'income':
+            if transaction.saving_goal:
+                # Update saving goal balance
+                transaction.saving_goal.balance += transaction.saving_amount
+            account = Account.objects.get(name='Checking')
+            account.balance += transaction.checking_amount
+        elif transaction.transaction_type == 'expenditure':
+            if transaction.saving_goal:
+                # Decrease saving goal balance
+                transaction.saving_goal.balance -= transaction.saving_amount
+            account = Account.objects.get(name='Checking')
+            account.balance -= transaction.checking_amount
+        
+        # Save the updated account
+        account.save()
+
+        if transaction.saving_goal:
+            # Save updated saving goal balance
+            transaction.saving_goal.save()
+
+        return response
+
+    success_url = '/transactions/'  # Redirect to transaction list page after successful creation
+
+# Add other views like TransactionList, TransactionDetail, etc.
+
+class TransactionCreate(CreateView):
+    model = Transaction
+    fields = '__all__'
+    success_url = '/transactions/'
 
 class TransactionList(ListView):
     model = Transaction
+    template_name = 'main_app/transaction_list.html'
+    context_object_name = 'transactions'   # <-- matches your template
 
 class TransactionDetail(DetailView):
     model = Transaction
+    template_name = 'main_app/transaction_detail.html'
+    context_object_name = 'transaction'
 
 class TransactionUpdate(UpdateView):
     model = Transaction
     fields = '__all__'
+    success_url = '/transactions/'
 
 
 class TransactionDelete(DeleteView):

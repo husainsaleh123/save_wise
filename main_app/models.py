@@ -57,7 +57,6 @@ class Account(models.Model):
     
 
 # Add the Transaction model
-# Add the Transaction model
 class Transaction(models.Model):
     # Choices for transaction type
     INCOME = 'income'
@@ -67,15 +66,15 @@ class Transaction(models.Model):
         (EXPENDITURE, 'Expenditure'),
     ]
     image = models.ImageField(upload_to='transaction_images/', blank=True, null=True)
+    name = models.CharField(max_length=200, default="Untitled Transaction")
     description = models.CharField(blank=True, null=True)
-    name = models.CharField
+    
     transaction_type = models.CharField(
         max_length=20,
         choices=TRANSACTION_TYPE_CHOICES,
         default=INCOME,
     )
 
-    
     # Reference to the Goal model with a dropdown
     saving_goal = models.ForeignKey(
         Goal,
@@ -85,9 +84,11 @@ class Transaction(models.Model):
         related_name='transactions'
     )
     
-    amount = models.FloatField()  # Total amount for the transaction
+    amount = models.FloatField(default=0)  # Total amount for the transaction
     saving_amount = models.FloatField()  # Amount allocated to saving
     checking_amount = models.FloatField()  # Amount allocated to checking
+    transaction_date = models.DateField(auto_now=True)
+    image = models.ImageField(upload_to='transaction_images/', blank=True, null=True)  # Image field added
 
 def save(self, *args, **kwargs):
         # Ensure that the sum of saving_amount and checking_amount equals amount

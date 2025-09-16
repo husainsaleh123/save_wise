@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  <!-- (Optional) If you’ll style this page separately -->
+  <link rel="stylesheet" href="{% static 'css/transactions/transaction-detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <h1>Details for {{ transaction.name }}</h1>
+</section>
+
+<section class="goal-container">  {# reusing same wrapper styles for consistency #}
+  <article class="goal-card">
+    <div class="goal-thumb" aria-hidden="true"></div>
+
+    <div class="goal-info">
+      <header class="goal-top">
+        <h2 class="goal-title">{{ transaction.name }}</h2>
+        <span class="date-chip">
+          {{ transaction.created_at|date:"n/j/Y" }}
+        </span>
+      </header>
+
+      <div class="goal-status">
+        <span class="dot"></span>
+        <span class="status-text">{{ transaction.transaction_type|capfirst }}</span>
+      </div>
+
+      <p class="goal-desc">
+        {{ transaction.description }}
+      </p>
+
+      {% if transaction.saving_goal %}
+      <p class="amount-row">
+        <strong>Linked Goal:</strong>
+        <a href="{% url 'goal-detail' transaction.saving_goal.id %}">
+          {{ transaction.saving_goal.name }}
+        </a>
+      </p>
+      {% endif %}
+
+      <p class="amount-row">
+        <strong>Total Amount:</strong> {{ transaction.amount|floatformat:0 }}
+      </p>
+
+      <p class="amount-row">
+        <strong>Saving Portion:</strong> {{ transaction.saving_amount|floatformat:0 }}
+      </p>
+
+      <p class="amount-row">
+        <strong>Checking Portion:</strong> {{ transaction.checking_amount|floatformat:0 }}
+      </p>
+
+      {% if transaction.image %}
+        <div style="margin-top:12px;">
+          <img src="{{ transaction.image.url }}" alt="{{ transaction.name }}" style="max-width:100%; border-radius:12px;">
+        </div>
+      {% endif %}
+    </div>
+  </article>
+</section>
+
+<div class="goal-actions">
+  <a href="{% url 'transaction-update' transaction.id %}" class="btn warn">Edit</a>
+  <a href="{% url 'transaction-delete' transaction.id %}" class="btn danger">Delete</a>
+</div>
+{% endblock %}
