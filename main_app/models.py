@@ -2,6 +2,7 @@
 from django.db import models
 from django.urls import reverse
 from datetime import date
+from django.utils import timezone
 
 class Goal(models.Model):
     image = models.ImageField(upload_to='goal_images/', blank=True, null=True)
@@ -58,46 +59,38 @@ class Account(models.Model):
 
 # Add the Transaction model
 class Transaction(models.Model):
-    # Choices for transaction type
     INCOME = 'income'
     EXPENDITURE = 'expenditure'
     TRANSACTION_TYPE_CHOICES = [
         (INCOME, 'Income'),
         (EXPENDITURE, 'Expenditure'),
     ]
+
     image = models.ImageField(upload_to='transaction_images/', blank=True, null=True)
     name = models.CharField(max_length=200, default="Untitled Transaction")
-    description = models.CharField(blank=True, null=True)
-    
-    transaction_type = models.CharField(
-        max_length=20,
-        choices=TRANSACTION_TYPE_CHOICES,
-        default=INCOME,
-    )
+    description = models.CharField(max_length=500, blank=True, null=True)
+    transaction_type = models.CharField(max_length=20, choices=TRANSACTION_TYPE_CHOICES, default=INCOME)
+    saving_goal = models.ForeignKey("Goal", on_delete=models.SET_NULL, blank=True, null=True, related_name="transactions")
 
-    # Reference to the Goal model with a dropdown
-    saving_goal = models.ForeignKey(
-        Goal,
-        on_delete=models.SET_NULL,
-        blank=True,
-        null=True,
-        related_name='transactions'
-    )
-    
-    amount = models.FloatField(default=0)  # Total amount for the transaction
-    saving_amount = models.FloatField()  # Amount allocated to saving
-    checking_amount = models.FloatField()  # Amount allocated to checking
-    transaction_date = models.DateField(auto_now=True)
-    image = models.ImageField(upload_to='transaction_images/', blank=True, null=True)  # Image field added
+    amount = models.FloatField(default=0)
+    saving_amount = models.FloatField()
+    checking_amount = models.FloatField()
+    transaction_date = models.DateField(default=timezone.localdate)
 
-def save(self, *args, **kwargs):
-        # Ensure that the sum of saving_amount and checking_amount equals amount
-        if self.saving_amount + self.checking_amount != self.amount:
-            raise ValueError("The sum of saving_amount and checking_amount must equal the total amount.")
+    def save(self, *args, **kwargs):
+        # Ensure totals match before saving
+        total_split = round((self.saving_amount or 0) + (self.checking_amount or 0), 2)
+        total = round(self.amount or 0, 2)
+
+        if total_split != total:
+            raise ValueError(
+                f"Invalid transaction: Total ({self.amount}) must equal Saving ({self.saving_amount}) + Checking ({self.checking_amount})."
+            )
+
         super().save(*args, **kwargs)
 
-def __str__(self):
+    def __str__(self):
         return self.name
 
-def get_absolute_url(self):
-        return reverse('transaction-detail', kwargs={'pk': self.id})
+    def get_absolute_url(self):
+        return reverse("transaction-detail", kwargs={"pk": self.id})

@@ -20,6 +20,13 @@
   {% endif %}
 </div>
 
+{% if form.non_field_errors %}
+  <ul class="errorlist">
+    {% for error in form.non_field_errors %}
+      <li style="color:red;">{{ error }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
 <form action="" method="post" class="transaction-form-container" enctype="multipart/form-data">
   {% csrf_token %}
 
@@ -50,20 +57,41 @@
     <small>You can leave this empty if not linked to a goal.</small>
   </div>
 
-  <div class="form-field">
-    <label for="transaction-amount">Total Amount*</label>
-    {{ form.amount }}
-  </div>
+<div class="form-field">
+  <label for="transaction-amount">Total Amount*</label>
+  {{ form.amount }}
+  {% if form.amount.errors %}
+    <ul class="errorlist">
+      {% for error in form.amount.errors %}
+        <p style="color:red">{{ error }}</p>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</div>
 
-  <div class="form-field">
-    <label for="transaction-saving-amount">Saving Portion*</label>
-    {{ form.saving_amount }}
-  </div>
+<div class="form-field">
+  <label for="saving-amount">Saving Portion*</label>
+  {{ form.saving_amount }}
+  {% if form.saving_amount.errors %}
+    <ul class="errorlist">
+      {% for error in form.saving_amount.errors %}
+        <p style="color:red">{{ error }}</p>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</div>
 
-  <div class="form-field">
-    <label for="transaction-checking-amount">Checking Portion*</label>
-    {{ form.checking_amount }}
-  </div>
+<div class="form-field">
+  <label for="checking-amount">Checking Portion*</label>
+  {{ form.checking_amount }}
+  {% if form.checking_amount.errors %}
+    <ul class="errorlist">
+      {% for error in form.checking_amount.errors %}
+        <p style="color:red">{{ error }}</p>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</div>
 
     <div class="form-field">
     <label for="transaction-date">Transaction Date*</label>

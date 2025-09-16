@@ -113,47 +113,35 @@ class AccountDetail(DetailView):
 
 class TransactionCreate(CreateView):
     model = Transaction
-    fields = ['image','name', 'transaction_type', 'description', 'saving_goal', 'amount', 'saving_amount', 'checking_amount','transaction_date']
-    
-    # Override form valid method to adjust the balances
+    fields = ['image','name','transaction_type','description','saving_goal',
+              'amount','saving_amount','checking_amount','transaction_date']
+    success_url = '/transactions/'
+
     def form_valid(self, form):
-        # Save the transaction first
-        response = super().form_valid(form)
+        # Use raw form.data (no cleaned_data)
+        try:
+            amount = float(form.data.get('amount') or 0)
+            saving_amount = float(form.data.get('saving_amount') or 0)
+            checking_amount = float(form.data.get('checking_amount') or 0)
+        except (TypeError, ValueError):
+            # If conversion failed, let the default field errors surface
+            return self.form_invalid(form)
 
-        # Get the transaction instance
-        transaction = form.instance
-        
-        # Handle the balance changes based on transaction type
-        if transaction.transaction_type == 'income':
-            if transaction.saving_goal:
-                # Update saving goal balance
-                transaction.saving_goal.balance += transaction.saving_amount
-            account = Account.objects.get(name='Checking')
-            account.balance += transaction.checking_amount
-        elif transaction.transaction_type == 'expenditure':
-            if transaction.saving_goal:
-                # Decrease saving goal balance
-                transaction.saving_goal.balance -= transaction.saving_amount
-            account = Account.objects.get(name='Checking')
-            account.balance -= transaction.checking_amount
-        
-        # Save the updated account
-        account.save()
+        if round(saving_amount + checking_amount, 2) != round(amount, 2):
+            msg = (
+                f"Total ({amount}) must equal "
+                f"Saving ({saving_amount}) + Checking ({checking_amount})."
+            )
+            # Put the error exactly where the user typed the numbers
+            form.add_error('saving_amount', msg)
+            form.add_error('checking_amount', msg)
+            return self.form_invalid(form)
 
-        if transaction.saving_goal:
-            # Save updated saving goal balance
-            transaction.saving_goal.save()
+        return super().form_valid(form)
 
-        return response
-
-    success_url = '/transactions/'  # Redirect to transaction list page after successful creation
+    
 
 # Add other views like TransactionList, TransactionDetail, etc.
-
-class TransactionCreate(CreateView):
-    model = Transaction
-    fields = '__all__'
-    success_url = '/transactions/'
 
 class TransactionList(ListView):
     model = Transaction
@@ -167,9 +155,28 @@ class TransactionDetail(DetailView):
 
 class TransactionUpdate(UpdateView):
     model = Transaction
-    fields = '__all__'
+    fields = ['image','name','transaction_type','description','saving_goal',
+              'amount','saving_amount','checking_amount','transaction_date']
     success_url = '/transactions/'
+    
+    def form_valid(self, form):
+            try:
+                amount          = float(form.data.get('amount') or 0)
+                saving_amount   = float(form.data.get('saving_amount') or 0)
+                checking_amount = float(form.data.get('checking_amount') or 0)
+            except (TypeError, ValueError):
+                return self.form_invalid(form)
 
+            if round(saving_amount + checking_amount, 2) != round(amount, 2):
+                msg = (
+                    f"Total ({amount}) must equal "
+                    f"Saving ({saving_amount}) + Checking ({checking_amount})."
+                )
+                form.add_error('saving_amount', msg)
+                form.add_error('checking_amount', msg)
+                return self.form_invalid(form)
+
+            return super().form_valid(form)
 
 class TransactionDelete(DeleteView):
     model = Transaction

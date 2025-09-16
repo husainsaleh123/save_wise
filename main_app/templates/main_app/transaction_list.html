@@ -24,7 +24,7 @@
           <header class="transaction-top">
             <h2 class="transaction-title">{{ transaction.name }}</h2>
             <span class="date-chip">
-              {{ transaction.date|date:"n/j/Y" }}  <!-- Use created_at for transaction date -->
+              {{ transaction.transaction_date|date:"Y-m-d" }}  <!-- Use created_at for transaction date -->
             </span>
           </header>
 
