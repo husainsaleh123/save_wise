@@ -10,7 +10,6 @@ class Goal(models.Model):
     description = models.CharField(max_length=500)
     target_amount = models.FloatField()
     amount_saved = models.FloatField()
-    interest_rate = models.FloatField()
     target_date = models.DateField()
     status = models.CharField(max_length=100)
     

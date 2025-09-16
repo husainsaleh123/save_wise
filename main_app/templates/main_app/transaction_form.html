@@ -7,6 +7,8 @@
   <!-- MCDatepicker (optional, if you want a date field for transactions) -->
   <link href="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.js"></script>
+  <!-- New MCDatepicker CSS -->
+  <script defer src="{% static 'js/transaction-detail.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -96,6 +98,13 @@
     <div class="form-field">
     <label for="transaction-date">Transaction Date*</label>
     {{ form.transaction_date }}
+     {% if form.transaction_date.errors %}
+    <ul class="errorlist">
+      {% for error in form.transaction_date.errors %}
+        <li style="color: red;">{{ error }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
   </div>
 
   <button type="submit" class="btn submit">Submit Transaction</button>

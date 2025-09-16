@@ -65,12 +65,6 @@
   </div>
 
   <div class="form-field">
-    <label for="goal-interest-rate">Interest Rate</label>
-    {{ form.interest_rate }}
-    <small>Please enter the simple interest in percentage (Ex: 5% = 5)</small>
-  </div>
-
-  <div class="form-field">
     <label for="goal-target-date">Target Date*</label>
     <input type="text" id="id_date" name="target_date" value="{{ goal.target_date|date:'Y-m-d' }}" />
     {% if form.target_date.errors %}

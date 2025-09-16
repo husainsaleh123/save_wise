@@ -18,7 +18,7 @@ class GoalForm(forms.ModelForm):
     status = forms.ChoiceField(choices=STATUS_CHOICES, required=True)
     class Meta:
         model = Goal
-        fields = ['image', 'name', 'description', 'target_amount', 'amount_saved', 'interest_rate', 'target_date', 'status']
+        fields = ['image', 'name', 'description', 'target_amount', 'amount_saved', 'target_date', 'status']
 
     def clean_target_date(self):
         target_date = self.cleaned_data['target_date']
@@ -33,10 +33,7 @@ class GoalForm(forms.ModelForm):
             raise forms.ValidationError("The amount saved cannot be greater than the target amount.")
         return amount_saved
     
-    # Set image and interest_rate as optional (not required)
     image = forms.ImageField(required=False)  # Image is not required
-    interest_rate = forms.FloatField(required=False)  # Interest rate is not required
-
 
     def clean_status(self):
         amount_saved = self.cleaned_data.get('amount_saved', 0)
@@ -118,6 +115,20 @@ class TransactionCreate(CreateView):
     success_url = '/transactions/'
 
     def form_valid(self, form):
+        # --- future date validation ---
+        t_date = form.data.get('transaction_date')
+        if t_date:
+            try:
+                # Convert string to Python date
+                entered_date = date.fromisoformat(t_date)
+                if entered_date > date.today():
+                    form.add_error('transaction_date', "Transaction date cannot be in the future.")
+                    return self.form_invalid(form)
+            except Exception:
+                # If conversion fails, let Django handle it
+                return self.form_invalid(form)
+
+
         # Use raw form.data (no cleaned_data)
         try:
             amount = float(form.data.get('amount') or 0)
@@ -158,11 +169,25 @@ class TransactionUpdate(UpdateView):
     fields = ['image','name','transaction_type','description','saving_goal',
               'amount','saving_amount','checking_amount','transaction_date']
     success_url = '/transactions/'
-    
+
     def form_valid(self, form):
+            # --- future date validation ---
+            t_date = form.data.get('transaction_date')
+            if t_date:
+                try:
+                    # Convert string to Python date
+                    entered_date = date.fromisoformat(t_date)
+                    if entered_date > date.today():
+                        form.add_error('transaction_date', "Transaction date cannot be in the future.")
+                        return self.form_invalid(form)
+                except Exception:
+                # If conversion fails, let Django handle it
+                    return self.form_invalid(form)
+            
+            # --- existing balance validation ---
             try:
-                amount          = float(form.data.get('amount') or 0)
-                saving_amount   = float(form.data.get('saving_amount') or 0)
+                amount = float(form.data.get('amount') or 0)
+                saving_amount = float(form.data.get('saving_amount') or 0)
                 checking_amount = float(form.data.get('checking_amount') or 0)
             except (TypeError, ValueError):
                 return self.form_invalid(form)
