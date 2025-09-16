@@ -3,7 +3,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView # add these 
-from .models import Goal, Account, Transaction
+from .models import Goal, Saving_Account, Transaction
 from django import forms
 from datetime import date
 
@@ -81,17 +81,12 @@ class GoalUpdate(UpdateView):
 class GoalDelete(DeleteView):
     model = Goal
     success_url = '/goals/'
-# Goal update view with restriction for "Checking" and "Savings" accounts
-class AccountUpdate(UpdateView):
-    model = Account
-    fields = ['name', 'balance', 'last_updated']
 
-    def get_object(self, queryset=None):
-        obj = super().get_object(queryset)
-        # Prevent modification of Checking and Savings accounts
-        if obj.name in ['Checking', 'Savings']:
-            raise ValueError(f"The {obj.name} account cannot be modified.")
-        return obj
+# Goal update view with restriction for "Checking" and "Savings" accounts
+class SavingAccountUpdate(UpdateView):
+    model = Saving_Account
+    fields = ['balance']
+    success_url = '/toys/'
 
 
 class GoalDelete(DeleteView):
@@ -99,65 +94,29 @@ class GoalDelete(DeleteView):
     success_url = '/goals/'
 
 
-def account_list(request):
+def saving_account_list(request):
     # Fetch all accounts from the database
-    accounts = Account.objects.all()
-    return render(request, 'main_app/account_list.html', {'accounts': accounts})
+    saving_accounts = Saving_Account.objects.all()
+    return render(request, 'main_app/account_list.html', {'saving_accounts':saving_accounts})
 
-class AccountDetail(DetailView):
-    model = Account
-
+class SavingAccountDetail(DetailView):
+    model = Saving_Account
 
 class TransactionCreate(CreateView):
     model = Transaction
-    fields = ['image','name','transaction_type','description','saving_goal',
-              'amount','saving_amount','checking_amount','transaction_date']
-    success_url = '/transactions/'
+    fields = ['image', 'name', 'transaction_type', 'description', 'saving_goal', 
+              'amount', 'saving_amount', 'checking_amount', 'transaction_date']
+    success_url = '/transactions/'  # Redirect to the transaction list after successful creation
 
     def form_valid(self, form):
-        # --- future date validation ---
-        t_date = form.data.get('transaction_date')
-        if t_date:
-            try:
-                # Convert string to Python date
-                entered_date = date.fromisoformat(t_date)
-                if entered_date > date.today():
-                    form.add_error('transaction_date', "Transaction date cannot be in the future.")
-                    return self.form_invalid(form)
-            except Exception:
-                # If conversion fails, let Django handle it
-                return self.form_invalid(form)
-
-
-        # Use raw form.data (no cleaned_data)
-        try:
-            amount = float(form.data.get('amount') or 0)
-            saving_amount = float(form.data.get('saving_amount') or 0)
-            checking_amount = float(form.data.get('checking_amount') or 0)
-        except (TypeError, ValueError):
-            # If conversion failed, let the default field errors surface
-            return self.form_invalid(form)
-
-        if round(saving_amount + checking_amount, 2) != round(amount, 2):
-            msg = (
-                f"Total ({amount}) must equal "
-                f"Saving ({saving_amount}) + Checking ({checking_amount})."
-            )
-            # Put the error exactly where the user typed the numbers
-            form.add_error('saving_amount', msg)
-            form.add_error('checking_amount', msg)
-            return self.form_invalid(form)
-
-        return super().form_valid(form)
-
+        return super().form_valid(form)  # This will automatically update the balance
     
-
 # Add other views like TransactionList, TransactionDetail, etc.
 
 class TransactionList(ListView):
     model = Transaction
     template_name = 'main_app/transaction_list.html'
-    context_object_name = 'transactions'   # <-- matches your template
+    context_object_name = 'transactions'   
 
 class TransactionDetail(DetailView):
     model = Transaction
@@ -168,40 +127,11 @@ class TransactionUpdate(UpdateView):
     model = Transaction
     fields = ['image','name','transaction_type','description','saving_goal',
               'amount','saving_amount','checking_amount','transaction_date']
-    success_url = '/transactions/'
+    success_url = '/transactions/'  # Redirect to the transaction list after successful update
 
     def form_valid(self, form):
-            # --- future date validation ---
-            t_date = form.data.get('transaction_date')
-            if t_date:
-                try:
-                    # Convert string to Python date
-                    entered_date = date.fromisoformat(t_date)
-                    if entered_date > date.today():
-                        form.add_error('transaction_date', "Transaction date cannot be in the future.")
-                        return self.form_invalid(form)
-                except Exception:
-                # If conversion fails, let Django handle it
-                    return self.form_invalid(form)
-            
-            # --- existing balance validation ---
-            try:
-                amount = float(form.data.get('amount') or 0)
-                saving_amount = float(form.data.get('saving_amount') or 0)
-                checking_amount = float(form.data.get('checking_amount') or 0)
-            except (TypeError, ValueError):
-                return self.form_invalid(form)
-
-            if round(saving_amount + checking_amount, 2) != round(amount, 2):
-                msg = (
-                    f"Total ({amount}) must equal "
-                    f"Saving ({saving_amount}) + Checking ({checking_amount})."
-                )
-                form.add_error('saving_amount', msg)
-                form.add_error('checking_amount', msg)
-                return self.form_invalid(form)
-
-            return super().form_valid(form)
+        return super().form_valid(form)  # This will automatically update the balance
+    
 
 class TransactionDelete(DeleteView):
     model = Transaction

@@ -26,7 +26,7 @@
     <li class="{% if request.path == '/home/' %}active{% endif %}"><a href="{% url 'home' %}">Home</a></li>
     <li class="{% if request.path == '/goals/' %}active{% endif %}"><a href="{% url 'goal-index' %}">Goals</a></li>
     <li class="{% if request.path == '/transactions/' %}active{% endif %}"><a href="{% url 'transaction-index'  %}">Transactions</a></li>
-    <li class="{% if request.path == '/accounts/' %}active{% endif %}"><a href="{% url 'account-list'  %}">Accounts</a></li>
+    <li class="{% if request.path == '/saving_accounts/' %}active{% endif %}"><a href="{% url 'saving-account-list'  %}">Accounts</a></li>
   </ul>
 </nav>
   <button class="logout-button">Logout</button>

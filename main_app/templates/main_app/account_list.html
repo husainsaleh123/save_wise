@@ -7,27 +7,23 @@
 
 {% block content %}
 <div class="page-header">
-  <h1>Accounts</h1>
+  <h1>Saving account</h1>
 </div>
 
 <!-- Table displaying the account details dynamically -->
 <table class="account-table">
   <thead>
     <tr>
-      <th>Account ID</th>
-      <th>Account Name</th>
       <th>Balance</th>
       <th>Last Updated</th>
     </tr>
   </thead>
   <tbody>
     <!-- Loop through the accounts and display each row -->
-    {% for account in accounts %}
+    {% for saving_account in saving_accounts %}
       <tr>
-        <td>{{ account.id }}</td>
-        <td>{{ account.name }}</td>
-        <td>{{ account.balance }}</td>
-        <td>{{ account.last_updated|date:"Y-m-d" }} , {{ account.last_updated|time:"H:i:s" }}</td>
+        <td>{{ saving_account.balance }}</td>
+        <td>{{ saving_account.last_updated|date:"Y-m-d" }} , {{ saving_account.last_updated|time:"H:i:s" }}</td>
       </tr>
     {% endfor %}
   </tbody>

@@ -12,12 +12,6 @@ class Goal(models.Model):
     amount_saved = models.FloatField()
     target_date = models.DateField()
     status = models.CharField(max_length=100)
-    
-     # Calculate simple interest
-    def calculate_interest(self):
-        time_period = (self.target_date - date.today()).days / 365  # Time in years
-        interest = self.target_amount * (self.interest_rate / 100) * time_period  # Simple Interest formula
-        return interest
 
     # new code below
     def __str__(self):
@@ -25,37 +19,17 @@ class Goal(models.Model):
 
 
 # Add the account model
-class Account(models.Model):
-    name = models.CharField(max_length=50)
-    balance = models.FloatField()
+class Saving_Account(models.Model):
+    balance = models.FloatField(default=0)
     last_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name
-
-    def save(self, *args, **kwargs):
-        # Prevent modification of "Checking" and "Savings" accounts
-        if self.name in ['Checking', 'Savings'] and self.pk is not None:
-            raise ValueError(f"The {self.name} account cannot be modified.")
-        super().save(*args, **kwargs)
+         return f"Savings Account — {self.balance:.2f}"
 
     def get_absolute_url(self):
-        return reverse('account-detail', kwargs={'pk': self.id})
+        return reverse('saving-account-detail', kwargs={'pk': self.id})
     
     
-    def update_balance(self, saving_amount, checking_amount, transaction_type):
-            # If the transaction type is income, increase the balances
-            if transaction_type == 'income':
-                self.saving_balance += saving_amount
-                self.checking_balance += checking_amount
-            # If the transaction type is expenditure, decrease the balances
-            elif transaction_type == 'expenditure':
-                self.saving_balance -= saving_amount
-                self.checking_balance -= checking_amount
-            
-            self.save()  # Save the updated balances to the database
-    
-
 # Add the Transaction model
 class Transaction(models.Model):
     INCOME = 'income'
@@ -69,7 +43,7 @@ class Transaction(models.Model):
     name = models.CharField(max_length=200, default="Untitled Transaction")
     description = models.CharField(max_length=500, blank=True, null=True)
     transaction_type = models.CharField(max_length=20, choices=TRANSACTION_TYPE_CHOICES, default=INCOME)
-    saving_goal = models.ForeignKey("Goal", on_delete=models.SET_NULL, blank=True, null=True, related_name="transactions")
+    saving_goal = models.ForeignKey('Goal', on_delete=models.SET_NULL, blank=True, null=True, related_name='transactions')
 
     amount = models.FloatField(default=0)
     saving_amount = models.FloatField()
@@ -77,16 +51,56 @@ class Transaction(models.Model):
     transaction_date = models.DateField(default=timezone.localdate)
 
     def save(self, *args, **kwargs):
-        # Ensure totals match before saving
-        total_split = round((self.saving_amount or 0) + (self.checking_amount or 0), 2)
-        total = round(self.amount or 0, 2)
+        # Ensure that the sum of saving_amount and checking_amount equals amount
+        if round(self.saving_amount + self.checking_amount, 2) != round(self.amount, 2):
+            raise ValueError("The sum of saving_amount and checking_amount must equal the total amount.")
+        
+        # Handle income logic
+        if self.transaction_type == self.INCOME:
+            if self.saving_goal:
+                # If a goal is selected, add the saving_amount to the goal's amount_saved
+                self.saving_goal.amount_saved += self.saving_amount
+                self.saving_goal.save()  # Save updated goal amount_saved
+            else:
+                # If no goal is selected, add the saving_amount to the Saving_Account balance
+                saving_account = Saving_Account.objects.first()  # You can define how to get the right account here
+                saving_account.balance += self.saving_amount
+                saving_account.save()
 
-        if total_split != total:
-            raise ValueError(
-                f"Invalid transaction: Total ({self.amount}) must equal Saving ({self.saving_amount}) + Checking ({self.checking_amount})."
-            )
+        # Handle expenditure logic
+        elif self.transaction_type == self.EXPENDITURE:
+            if self.saving_goal:
+                # If a goal is selected, subtract the saving_amount from the goal's amount_saved
+                self.saving_goal.amount_saved -= self.saving_amount
+                self.saving_goal.save()  # Save updated goal amount_saved
+            else:
+                # If no goal is selected, subtract the saving_amount from the Saving_Account balance
+                saving_account = Saving_Account.objects.first()  # You can define how to get the right account here
+                saving_account.balance -= self.saving_amount
+                saving_account.save()
 
+        # Now save the transaction
         super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        # Handle the deletion of transaction and revert balances
+        if self.saving_goal:
+            if self.transaction_type == self.INCOME:
+                self.saving_goal.amount_saved -= self.saving_amount
+            elif self.transaction_type == self.EXPENDITURE:
+                self.saving_goal.amount_saved += self.saving_amount
+            self.saving_goal.save()  # Save updated goal amount_saved
+        
+        # Ensure the Saving_Account is updated
+        if self.saving_goal:
+            saving_account = Saving_Account.objects.get(id=self.saving_goal.id)
+            if self.transaction_type == self.INCOME:
+                saving_account.balance -= self.saving_amount
+            elif self.transaction_type == self.EXPENDITURE:
+                saving_account.balance += self.saving_amount
+            saving_account.save()  # Save updated Saving_Account balance
+
+        super().delete(*args, **kwargs)  # Proceed with deleting the transaction
 
     def __str__(self):
         return self.name
