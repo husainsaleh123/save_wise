@@ -121,26 +121,45 @@ class Transaction(models.Model):
         # Now save the transaction
         super().save(*args, **kwargs)
 
-
-    def delete(self, *args, **kwargs):
-        # Handle the deletion of transaction and revert balances
-        if self.saving_goal:
-            if self.transaction_type == self.INCOME:
-                self.saving_goal.amount_saved -= self.saving_amount
-            elif self.transaction_type == self.EXPENDITURE:
-                self.saving_goal.amount_saved += self.saving_amount
-            self.saving_goal.save()  # Save updated goal amount_saved
+def delete(self, *args, **kwargs):
+    # Handle the deletion of transaction and revert balances
+    
+    # Case 1: If the transaction is linked to a goal
+    if self.saving_goal:
+        if self.transaction_type == self.INCOME:
+            # Subtract the saving_amount from the goal's amount_saved
+            self.saving_goal.amount_saved -= self.saving_amount
+        elif self.transaction_type == self.EXPENDITURE:
+            # Add the saving_amount to the goal's amount_saved
+            self.saving_goal.amount_saved += self.saving_amount
         
-        # Ensure the Saving_Account is updated
-        if self.saving_goal:
-            saving_account = Saving_Account.objects.get(id=self.saving_goal.id)
-            if self.transaction_type == self.INCOME:
-                saving_account.balance -= self.saving_amount
-            elif self.transaction_type == self.EXPENDITURE:
-                saving_account.balance += self.saving_amount
-            saving_account.save()  # Save updated Saving_Account balance
+        # Save the goal with the updated amount_saved
+        self.saving_goal.save()  
 
-        super().delete(*args, **kwargs)  # Proceed with deleting the transaction
+    # Case 2: If the transaction is not linked to any goal, update the Saving_Account balance
+    if not self.saving_goal:
+        try:
+            saving_account = Saving_Account.objects.first()  # Get the first available Saving_Account
+            if saving_account:
+                if self.transaction_type == self.INCOME:
+                    # Subtract the saving_amount from the Saving_Account balance
+                    saving_account.balance -= self.saving_amount
+                elif self.transaction_type == self.EXPENDITURE:
+                    # Add the saving_amount to the Saving_Account balance
+                    saving_account.balance += self.saving_amount
+
+                # Save the updated Saving_Account balance
+                saving_account.save()
+            else:
+                # If no Saving_Account exists, log the issue or handle accordingly
+                print("No Saving_Account found. Skipping balance update.")
+
+        except Saving_Account.DoesNotExist:
+            # If no Saving_Account exists, log the issue
+            print("Saving_Account does not exist. Cannot update balance.")
+    
+    # Proceed with deleting the transaction after the balance updates
+    super().delete(*args, **kwargs)
 
     def __str__(self):
         return self.name

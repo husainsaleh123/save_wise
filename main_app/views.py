@@ -146,8 +146,31 @@ class TransactionUpdate(UpdateView):
             return super().form_valid(form)
             
     
-
 class TransactionDelete(DeleteView):
     model = Transaction
-    fields = '__all__'
-    success_url = '/transactions/'
+    success_url = '/transactions/'  # Redirect to the transaction list after successful deletion
+
+    def delete(self, request, *args, **kwargs):
+        # Fetch the transaction to be deleted
+        transaction = self.get_object()
+
+        # First, handle the case where the transaction is linked to a goal
+        if transaction.saving_goal:
+            # Subtract the saving_amount from the goal's amount_saved
+            transaction.saving_goal.amount_saved -= transaction.saving_amount
+            transaction.saving_goal.save()  # Save the updated goal amount_saved
+        else:
+            # If no goal is linked, we should update the Saving_Account balance
+            saving_account = Saving_Account.objects.first()  # Get the first available Saving_Account
+            if saving_account:
+                saving_account.balance -= transaction.saving_amount
+                saving_account.save()  # Save the updated Saving_Account balance
+            else:
+                # If no Saving_Account exists, log or handle the issue here
+                print("No Saving Account found. Skipping balance update.")
+
+        # Now delete the transaction, regardless of Saving_Account existence
+        response = super().delete(request, *args, **kwargs)
+
+        # Return the response after the transaction deletion to ensure proper redirection
+        return response
