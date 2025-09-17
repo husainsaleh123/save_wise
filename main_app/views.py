@@ -3,7 +3,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView # add these 
-from .models import Goal, Saving_Account, Transaction
+from .models import Goal, Saving_Account, Checking_Account, Transaction
 from django import forms
 from datetime import date
 
@@ -86,8 +86,12 @@ class GoalDelete(DeleteView):
 class SavingAccountUpdate(UpdateView):
     model = Saving_Account
     fields = ['balance']
-    success_url = '/toys/'
+    success_url = '/saving_account/'
 
+class CheckingAccountUpdate(UpdateView):
+    model = Checking_Account
+    fields = ['balance']
+    success_url = '/checking_accounts/'  # Redirect after successful update
 
 class GoalDelete(DeleteView):
     model = Goal
@@ -101,6 +105,15 @@ def saving_account_list(request):
 
 class SavingAccountDetail(DetailView):
     model = Saving_Account
+
+
+def checking_account_list(request):
+    # Fetch all accounts from the database
+    checking_accounts = Checking_Account.objects.all()
+    return render(request, 'main_app/account_list.html', {'checking_accounts':checking_accounts})
+
+class CheckingAccountDetail(DetailView):
+    model = Checking_Account
 
 class TransactionCreate(CreateView):
     model = Transaction

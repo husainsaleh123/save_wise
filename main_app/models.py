@@ -28,6 +28,18 @@ class Saving_Account(models.Model):
 
     def get_absolute_url(self):
         return reverse('saving-account-detail', kwargs={'pk': self.id})
+
+
+# Add the Checking Account model
+class Checking_Account(models.Model):
+    balance = models.FloatField(default=0)  # Default balance is 0
+    last_updated = models.DateTimeField(auto_now=True)  # Auto-updates on every save
+
+    def __str__(self):
+        return f"Checking Account — {self.balance:.2f}"
+
+    def get_absolute_url(self):
+        return reverse('checking-account-detail', kwargs={'pk': self.id})
     
     
 # Add the Transaction model
@@ -51,76 +63,95 @@ class Transaction(models.Model):
     transaction_date = models.DateField(default=timezone.localdate)
 
     def save(self, *args, **kwargs):
-        # If it's an update, get the old transaction data
-        if self.pk:
-            old_transaction = Transaction.objects.get(pk=self.pk)
-            old_saving_amount = old_transaction.saving_amount
-            old_transaction_type = old_transaction.transaction_type
-        else:
-            old_saving_amount = 0  # For new transactions, there's no old amount
-            old_transaction_type = None
-
-        # Ensure that the sum of saving_amount and checking_amount equals amount
-        if round(self.saving_amount + self.checking_amount, 2) != round(self.amount, 2):
-            raise ValueError("The sum of saving_amount and checking_amount must equal the total amount.")
-
-        # Handle income logic
-        if self.transaction_type == self.INCOME:
-            if self.saving_goal:
-                # If a goal is selected, add the saving_amount to the goal's amount_saved
-                self.saving_goal.amount_saved += self.saving_amount - old_saving_amount  # Adjust for updates
-                self.saving_goal.save()  # Save updated goal amount_saved
+            # If it's an update, get the old transaction data
+            if self.pk:
+                old_transaction = Transaction.objects.get(pk=self.pk)
+                old_saving_amount = old_transaction.saving_amount
+                old_checking_amount = old_transaction.checking_amount
+                old_transaction_type = old_transaction.transaction_type
             else:
-                # If no goal is selected, add the saving_amount to the Saving_Account balance
-                saving_account = Saving_Account.objects.first()  # Get the first available Saving_Account
-                if saving_account:
-                    saving_account.balance += self.saving_amount - old_saving_amount  # Adjust for updates
-                    saving_account.save()
+                old_saving_amount = 0  # For new transactions, there's no old amount
+                old_checking_amount = 0
+                old_transaction_type = None
 
-        # Handle expenditure logic
-        elif self.transaction_type == self.EXPENDITURE:
-            if self.saving_goal:
-                # If a goal is selected, subtract the saving_amount from the goal's amount_saved
-                self.saving_goal.amount_saved -= self.saving_amount - old_saving_amount  # Adjust for updates
-                self.saving_goal.save()  # Save updated goal amount_saved
-            else:
-                # If no goal is selected, subtract the saving_amount from the Saving_Account balance
-                saving_account = Saving_Account.objects.first()  # Get the first available Saving_Account
-                if saving_account:
-                    saving_account.balance -= self.saving_amount - old_saving_amount  # Adjust for updates
-                    saving_account.save()
+            # Ensure that the sum of saving_amount and checking_amount equals the total amount
+            if round(self.saving_amount + self.checking_amount, 2) != round(self.amount, 2):
+                raise ValueError("The sum of saving_amount and checking_amount must equal the total amount.")
 
-        # If the transaction type changes (from income to expenditure or vice versa), adjust the balance
-        if old_transaction_type != self.transaction_type:
-            # If it was income and now it's expenditure, subtract the saving_amount twice
-            if old_transaction_type == self.INCOME:
+            # Handle saving account balance update if needed
+            saving_account = Saving_Account.objects.first()  # Assuming one Saving Account
+
+            # Handle Checking Account balance update if needed
+            checking_account = Checking_Account.objects.first()  # Assuming one Checking Account
+
+            # **Check if Checking_Account exists, create if not**
+            if not checking_account:
+                checking_account = Checking_Account.objects.create(balance=0)  # Create Checking_Account with default balance 0
+
+            # Handle income logic for Saving_Account or Checking_Account
+            if self.transaction_type == self.INCOME:
                 if self.saving_goal:
-                    self.saving_goal.amount_saved -= old_saving_amount  # Revert old income change (subtract once)
-                    self.saving_goal.amount_saved -= self.saving_amount  # Subtract for the new expenditure
+                    # If a goal is selected, add the saving_amount to the goal's amount_saved
+                    self.saving_goal.amount_saved += self.saving_amount - old_saving_amount  # Adjust for updates
                     self.saving_goal.save()  # Save updated goal amount_saved
                 else:
-                    saving_account = Saving_Account.objects.first()  # Get the first available Saving_Account
+                    # If no goal is selected, add the saving_amount to the Saving_Account balance
                     if saving_account:
-                        saving_account.balance -= old_saving_amount  # Revert old income change (subtract once)
-                        saving_account.balance -= self.saving_amount  # Subtract for the new expenditure
+                        saving_account.balance += self.saving_amount - old_saving_amount  # Adjust for updates
                         saving_account.save()
 
-            # If it was expenditure and now it's income, add the saving_amount twice
-            elif old_transaction_type == self.EXPENDITURE:
+                # Income logic for Checking_Account
+                if checking_account:
+                    checking_account.balance += self.checking_amount - old_checking_amount  # Adjust for updates
+                    checking_account.save()
+
+            # Handle expenditure logic for Saving_Account or Checking_Account
+            elif self.transaction_type == self.EXPENDITURE:
                 if self.saving_goal:
-                    self.saving_goal.amount_saved += old_saving_amount  # Revert old expenditure change (add once)
-                    self.saving_goal.amount_saved += self.saving_amount  # Add for the new income
+                    # If a goal is selected, subtract the saving_amount from the goal's amount_saved
+                    self.saving_goal.amount_saved -= self.saving_amount - old_saving_amount  # Adjust for updates
                     self.saving_goal.save()  # Save updated goal amount_saved
                 else:
-                    saving_account = Saving_Account.objects.first()  # Get the first available Saving_Account
+                    # If no goal is selected, subtract the saving_amount from the Saving_Account balance
                     if saving_account:
-                        saving_account.balance += old_saving_amount  # Revert old expenditure change (add once)
-                        saving_account.balance += self.saving_amount  # Add for the new income
+                        saving_account.balance -= self.saving_amount - old_saving_amount  # Adjust for updates
                         saving_account.save()
 
-        # Now save the transaction
-        super().save(*args, **kwargs)
+                # Expenditure logic for Checking_Account
+                if checking_account:
+                    checking_account.balance -= self.checking_amount - old_checking_amount  # Adjust for updates
+                    checking_account.save()
 
+            # If the transaction type changes (from income to expenditure or vice versa), adjust the balance
+            if old_transaction_type != self.transaction_type:
+                # If it was income and now it's expenditure, subtract the saving_amount twice
+                if old_transaction_type == self.INCOME:
+                    if self.saving_goal:
+                        self.saving_goal.amount_saved -= old_saving_amount  # Revert old income change (subtract once)
+                        self.saving_goal.amount_saved -= self.saving_amount  # Subtract for the new expenditure
+                        self.saving_goal.save()  # Save updated goal amount_saved
+                    else:
+                        if saving_account:
+                            saving_account.balance -= old_saving_amount  # Revert old income change (subtract once)
+                            saving_account.balance -= self.saving_amount  # Subtract for the new expenditure
+                            saving_account.save()
+
+                # If it was expenditure and now it's income, add the saving_amount twice
+                elif old_transaction_type == self.EXPENDITURE:
+                    if self.saving_goal:
+                        self.saving_goal.amount_saved += old_saving_amount  # Revert old expenditure change (add once)
+                        self.saving_goal.amount_saved += self.saving_amount  # Add for the new income
+                        self.saving_goal.save()  # Save updated goal amount_saved
+                    else:
+                        if saving_account:
+                            saving_account.balance += old_saving_amount  # Revert old expenditure change (add once)
+                            saving_account.balance += self.saving_amount  # Add for the new income
+                            saving_account.save()
+
+            # Now save the transaction
+            super().save(*args, **kwargs)
+
+            
     def delete(self, *args, **kwargs):
         # Case 1: If the transaction is linked to a goal
         if self.saving_goal:
@@ -156,6 +187,15 @@ class Transaction(models.Model):
             except Saving_Account.DoesNotExist:
                 # If no Saving_Account exists, log the issue
                 print("Saving_Account does not exist. Cannot update balance.")
+
+        # Update the Checking Account balance
+        checking_account = Checking_Account.objects.first()  # Assuming one Checking Account
+        if checking_account:
+            if self.transaction_type == self.INCOME:
+                checking_account.balance += self.checking_amount  # Add checking_amount for income
+            elif self.transaction_type == self.EXPENDITURE:
+                checking_account.balance -= self.checking_amount  # Subtract checking_amount for expenditure
+            checking_account.save()
 
         # Now, proceed with deleting the transaction after the balance updates
         super().delete(*args, **kwargs)  # Proceed with deleting the transaction

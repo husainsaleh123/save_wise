@@ -12,6 +12,10 @@ urlpatterns = [
    path('goals/<int:pk>/delete/', views.GoalDelete.as_view(), name='goal-delete'),
    path('saving_accounts/<int:pk>/', views.SavingAccountDetail.as_view(), name='saving-account-detail'),
    path('saving_accounts/', views.saving_account_list, name='saving-account-list'),
+    # Checking Account URLs (added for Checking_Account)
+    path('checking_accounts/', views.checking_account_list, name='checking-account-list'),
+    path('checking_accounts/<int:pk>/', views.CheckingAccountDetail.as_view(), name='checking-account-detail'),
+    path('checking_accounts/<int:pk>/update/', views.CheckingAccountUpdate.as_view(), name='checking-account-update'),
    path('transactions/create/', views.TransactionCreate.as_view(), name='transaction-create'),
    path('transactions/', views.TransactionList.as_view(), name='transaction-index'),
    path('transactions/<int:pk>/', views.TransactionDetail.as_view(), name='transaction-detail'),

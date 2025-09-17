@@ -29,4 +29,28 @@
   </tbody>
 </table>
 
+
+<div class="page-header">
+  <h1>Checking Accounts</h1>
+</div>
+
+<!-- Table displaying the Checking Account details dynamically -->
+<table class="account-table">
+  <thead>
+    <tr>
+      <th>Balance</th>
+      <th>Last Updated</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Loop through the checking accounts and display each row -->
+    {% for checking_account in checking_accounts %}
+      <tr>
+        <td>{{ checking_account.balance }}</td>
+        <td>{{ checking_account.last_updated|date:"Y-m-d" }} , {{ checking_account.last_updated|time:"H:i:s" }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
 {% endblock %}
