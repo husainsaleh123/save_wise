@@ -1,3 +1,4 @@
+<!-- account_list.html -->
 {% extends 'base.html' %}
 {% load static %}
 
@@ -19,7 +20,7 @@
     </tr>
   </thead>
   <tbody>
-    <!-- Loop through the accounts and display each row -->
+    <!-- Loop through the saving accounts and display each row -->
     {% for saving_account in saving_accounts %}
       <tr>
         <td>{{ saving_account.balance }}</td>
@@ -28,7 +29,6 @@
     {% endfor %}
   </tbody>
 </table>
-
 
 <div class="page-header">
   <h1>Checking Accounts</h1>

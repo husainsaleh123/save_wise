@@ -10,8 +10,8 @@ urlpatterns = [
    path('goals/create/', views.GoalCreate.as_view(), name='goal-create'),
    path('goals/<int:pk>/update/', views.GoalUpdate.as_view(), name='goal-update'),
    path('goals/<int:pk>/delete/', views.GoalDelete.as_view(), name='goal-delete'),
-   path('saving_accounts/<int:pk>/', views.SavingAccountDetail.as_view(), name='saving-account-detail'),
-   path('saving_accounts/', views.saving_account_list, name='saving-account-list'),
+   path('accounts/<int:pk>/', views.SavingAccountDetail.as_view(), name='saving-account-detail'),
+   path('accounts/', views.accounts_list, name='account-list'),
     # Checking Account URLs (added for Checking_Account)
     path('checking_accounts/', views.checking_account_list, name='checking-account-list'),
     path('checking_accounts/<int:pk>/', views.CheckingAccountDetail.as_view(), name='checking-account-detail'),

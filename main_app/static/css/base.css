@@ -74,6 +74,25 @@ header .logout-button:hover {
   color: #008080;
 }
 
+/* Table header styles */
+table th {
+  text-align: left;
+  padding: 12px;
+  border: 2px solid #b5b5b5;
+  background-color: #def6f6; /* Optional: Add a background color */
+}
+
+/* Table row styles */
+table td {
+  padding: 12px;
+  border: 1.5px solid #b5b5b5;
+}
+
+/* Optional: Add some hover effect for rows */
+table tr:hover {
+  background-color: #f1f1f1;
+}
+
 
 
 /* footer styling */

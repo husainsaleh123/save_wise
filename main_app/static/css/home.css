@@ -63,6 +63,22 @@ main > section {
   margin-top: 16px;
 }
 
+/* static/css/account-list.css */
+.page-header{
+  align-items: center;
+  text-align: center;
+  margin: 80px auto 50px;
+}
+
+/* Table styles */
+.account-table {
+  margin: 0px auto;
+  width: 80%;
+  border: 2px solid #b5b5b5;
+  border-collapse: collapse;
+}
+
+
 @media only screen and (min-width: 768px) {
   main {
     justify-content: space-around;

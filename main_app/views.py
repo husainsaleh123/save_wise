@@ -56,8 +56,22 @@ class GoalCreate(CreateView):
 
 # Define the home view function
 def home(request):
-    # Send a simple HTML response
-    return render(request, 'home.html')
+    # You can make this a basic landing page or redirect to accounts page
+    return render(request, 'home.html')  # Basic landing page
+
+
+# Create a new view to list both Saving and Checking accounts
+def accounts_list(request):
+    # Fetch all saving and checking accounts
+    saving_accounts = Saving_Account.objects.all()
+    checking_accounts = Checking_Account.objects.all()
+
+    # Pass these objects to the template
+    return render(request, 'main_app/account_list.html', {
+        'saving_accounts': saving_accounts,
+        'checking_accounts': checking_accounts
+    })
+
 
 def goal_index(request):
     goals = Goal.objects.all()
