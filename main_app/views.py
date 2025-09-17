@@ -41,7 +41,7 @@ class GoalForm(forms.ModelForm):
         
         # Set the status based on amount_saved
         if amount_saved == 0:
-            return 'not_started'
+            return 'Not started'
         elif amount_saved < target_amount:
             return 'ongoing'
         elif amount_saved >= target_amount:
