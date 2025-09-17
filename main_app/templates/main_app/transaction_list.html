@@ -39,17 +39,17 @@
 
           <p class="amount-row">
             <strong>Total Amount:</strong>
-            <span>{{ transaction.amount|floatformat:0 }}</span>
+            <span>{{ transaction.amount|floatformat:3 }}</span>
           </p>
 
           <p class="amount-row">
             <strong>Savings Amount:</strong>
-            <span>{{ transaction.saving_amount|floatformat:0 }}</span>
+            <span>{{ transaction.saving_amount|floatformat:3 }}</span>
           </p>
 
           <p class="amount-row">
             <strong>Checking Amount:</strong>
-            <span>{{ transaction.checking_amount|floatformat:0 }}</span>
+            <span>{{ transaction.checking_amount|floatformat:3 }}</span>
           </p>
 
           <button class="transaction-view-btn">

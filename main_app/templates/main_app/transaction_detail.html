@@ -11,7 +11,7 @@
   <h1>Details for {{ transaction.name }}</h1>
 </section>
 
-<section class="goal-container">  {# reusing same wrapper styles for consistency #}
+<section class="goal-container">  
   <article class="goal-card">
     <div class="goal-thumb" aria-hidden="true"></div>
 
@@ -42,15 +42,15 @@
       {% endif %}
 
       <p class="amount-row">
-        <strong>Total Amount:</strong> {{ transaction.amount|floatformat:0 }}
+        <strong>Total Amount:</strong> {{ transaction.amount|floatformat:3 }}
       </p>
 
       <p class="amount-row">
-        <strong>Saving Portion:</strong> {{ transaction.saving_amount|floatformat:0 }}
+        <strong>Saving Portion:</strong> {{ transaction.saving_amount|floatformat:3 }}
       </p>
 
       <p class="amount-row">
-        <strong>Checking Portion:</strong> {{ transaction.checking_amount|floatformat:0 }}
+        <strong>Checking Portion:</strong> {{ transaction.checking_amount|floatformat:3 }}
       </p>
 
       {% if transaction.image %}
