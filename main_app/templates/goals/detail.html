@@ -32,7 +32,7 @@
         </div>
 
         <p class="goal-desc">{{ goal.description }}</p>
-        <p class="amount-row"><strong>Amount saved:</strong> {{ goal.amount_saved|floatformat:0 }}/{{ goal.target_amount|floatformat:0 }}</p>
+        <p class="amount-row"><strong>Amount saved:</strong> {{ goal.amount_saved|floatformat:3 }}/{{ goal.target_amount|floatformat:3 }}</p>
         <div class="progress">
           <div class="progress-fill"></div>
           <span class="progress-pill">{{ goal.progress }}%</span>
