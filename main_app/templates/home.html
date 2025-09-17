@@ -4,4 +4,45 @@
   href="{% static 'css/base.css' %}"
 />
 {% endblock %} {% block content %}
+<main>
+  <section class="cta">
+    <div class="left">
+        <h1>Start your journey to financial freedom today! </h1>
+        <p>Set your goals, track your progress, and watch your savings grow!</p>
+          <div class="cta-buttons">
+          <a href="{% url 'goal-create' %}" class="btn add-goal">Add New Goal</a>
+          <a href="{% url 'account-list' %}" class="btn go-to-accounts">View Accounts</a>
+        </div>
+    </div>
+    <div class="right">
+        <img src="{% static 'images/rich-people.jpg' %}" alt="rich-person" />
+    </div>
+  </section>
+
+  <section class="value-prop">
+    <h1>Why choose SaveWise?</h1>
+    <div class="cards-container">
+      <div class="card">
+        <img src="{% static 'images/Goal.png' %}" alt="Smart Search" />
+        <h3>Track Your Goals</h3>
+        <p>Stay organized by setting and tracking your financial goals with ease.</p>
+      </div>
+      <div class="card">
+        <img src="{% static 'images/Secure.png' %}" alt="Prime Locations" />
+        <h3>Secure Your Savings</h3>
+        <p>Protect your financial data with top-notch security features.</p>
+      </div>
+      <div class="card">
+        <img src="{% static 'images/Insights.png' %}" alt="Verified Listings" />
+        <h3>Gain Insights</h3>
+        <p>Get detailed reports and insights to make informed financial decisions.</p>
+      </div>
+      <div class="card">
+        <img src="{% static 'images/Global.png' %}" alt="24/7 Support" />
+        <h3>Access Anytime, Anywhere</h3>
+        <p>Manage your finances on the go with SaveWise's mobile-friendly platform.</p>
+      </div>
+    </div>
+  </section>
+</main>
 {% endblock %}

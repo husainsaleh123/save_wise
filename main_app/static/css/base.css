@@ -174,3 +174,172 @@ footer .footer-right p a:hover {
 main{
     min-height: 650px; /*Very important, ensures there is space between header and footer even if the main is blank*/
 }
+.cta {
+  display: flex;
+  justify-content: flex-start; /* Align content to the left */
+  align-items: center;
+  padding: 60px;
+  background: linear-gradient(to right, #a4fcff, #9fdcb8);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin: 0px auto;
+  width: 100%; /* Full width */
+  transition: all 0.3s ease;
+  flex-wrap: wrap; /* Ensure elements wrap if necessary */
+}
+
+.cta .left {
+  max-width: 60%; /* Control the size of the text section */
+  margin-left: 30px; /* Adjust this to move the content more to the right */
+  flex: 1;
+}
+
+.cta h1 {
+  font-size: 2.5rem;
+  color: black;
+  font-weight: bold;
+  margin-bottom: 15px;
+  word-wrap: break-word; /* Allow long words to break into the next line */
+}
+
+.cta h1:hover{
+  transform: scale(1.03);
+}
+
+
+.cta p {
+  font-size: 18px;
+  color: black;
+  line-height: 1.5;
+  word-wrap: break-word;
+  margin-bottom: 20px;
+}
+
+.cta p:hover{
+  transform: scale(1.01);
+}
+
+.cta .right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cta img {
+  width: 50%; /* Reduced image width */
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+  object-fit: cover;
+}
+
+.cta img:hover {
+  transform: scale(1.05);
+}
+
+.cta .cta-buttons {
+  margin-top: 40px;
+  display: flex;
+  gap: 10px;
+}
+
+.cta .btn {
+  padding: 15px 30px;
+  background-color: #fff;
+  color: #333;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.cta .btn:hover {
+  background-color: #64d1f4;
+  color: white;
+}
+
+.cta .btn.add-goal {
+  background-color: #008080;
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+  border: 3px solid #008080;
+}
+
+.cta .btn.add-goal:hover {
+  background-color: #006262;
+  border: 3px solid #006262;
+}
+
+.cta .btn.go-to-accounts {
+  background-color: #ffffff;
+  color: #008080;
+  font-weight: 600;
+  border: 3px solid #008080;
+  font-size: 18px;
+}
+
+
+.cta .btn.go-to-accounts:hover {
+  color: #006262;
+  border: 3px solid #006262;
+}
+
+/* General styling for the section */
+.value-prop {
+  margin-top: 60px;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.value-prop h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 40px;
+}
+
+/* Cards container to center the cards */
+.cards-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+/* Styling for each card */
+.card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 250px;
+  transition: transform 0.3s ease;
+}
+
+/* Styling for the images in the cards */
+.card img {
+  width: 90px;
+  height: 90px;
+}
+
+/* Card titles */
+.card h3 {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Card descriptions */
+.card p {
+  line-height: 2;
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* Hover effect on cards */
+.card:hover {
+  transform: scale(1.05);
+}
