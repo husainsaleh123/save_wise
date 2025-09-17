@@ -192,9 +192,9 @@ class Transaction(models.Model):
         checking_account = Checking_Account.objects.first()  # Assuming one Checking Account
         if checking_account:
             if self.transaction_type == self.INCOME:
-                checking_account.balance += self.checking_amount  # Add checking_amount for income
+                checking_account.balance -= self.checking_amount  # Add checking_amount for income
             elif self.transaction_type == self.EXPENDITURE:
-                checking_account.balance -= self.checking_amount  # Subtract checking_amount for expenditure
+                checking_account.balance += self.checking_amount  # Subtract checking_amount for expenditure
             checking_account.save()
 
         # Now, proceed with deleting the transaction after the balance updates
