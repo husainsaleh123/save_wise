@@ -259,3 +259,39 @@ form .form-field label[for="goal-image"] {
     flex-direction: column; /* Stack header elements vertically */
   }
 }
+
+/* Centering the form container */
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f8f8f8;  /* Optional: Light background color */
+  padding: 20px;
+  width: 100%;
+  margin: 0 auto; /* Center the form */
+}
+/* Ensuring the form is centered */
+.signup-form {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 80%;
+}
+
+/* Centering the login link */
+.login-link {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.login-link a {
+  color: #00bfae;
+  text-decoration: none;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}

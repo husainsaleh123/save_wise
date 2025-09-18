@@ -1,10 +1,15 @@
-{% extends 'base.html' %} {% load static %} {% block head %}
-<link
-  rel="stylesheet"
-  href="{% static 'css/base.css' %}"
-/>
-{% endblock %} {% block content %}
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/base.css' %}" />
+{% endblock %}
+
+{% block content %}
 <main>
+
+  {% if user.is_authenticated %}
+  <!-- Only show these sections if the user is authenticated -->
   <section class="cta">
     <div class="left">
         <h1>Start your journey to financial freedom today! </h1>
@@ -44,17 +49,20 @@
       </div>
     </div>
   </section>
+  {% endif %}
 
   {% if not user.is_authenticated %}
-  <section>
-  <form action="{% url 'home' %}" method="post" class="login">
-    <h1>Login</h1>
-    {% csrf_token %} {{ form.as_p }}
-    <input type="hidden" name="next" value="{{ next }}" />
-    <button type="submit" class="btn submit">Login</button>
-  </form>
-</section>
-{% endif %}
+  <section class="login-container">
+    <form action="{% url 'home' %}" method="post" class="login-form">
+      <h1>Welcome back to SaveWise.</h1>
+      <p class="login">Login to your account.</p>
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="login-btn">Login</button>
+      <p class="signup-link">Don’t have an account? <a href="{% url 'signup' %}">Sign Up.</a></p>
+    </form>
+  </section>
+  {% endif %}
 
 </main>
 {% endblock %}
