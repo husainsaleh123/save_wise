@@ -185,14 +185,12 @@ class TransactionDetail(DetailView):
     template_name = 'main_app/transaction_detail.html'
     context_object_name = 'transaction'
     
-class TransactionUpdate(LoginRequiredMixin, UpdateView):
+class TransactionUpdate(UpdateView):
     model = Transaction
     fields = ['name','transaction_type','description','saving_goal',
               'amount','saving_amount','checking_amount','transaction_date']
     success_url = '/transactions/'
 
-    def get_queryset(self):
-        return Transaction.objects.filter(user=self.request.user)
 
     def form_valid(self, form):
         form.instance.user = self.request.user

@@ -76,7 +76,7 @@ class Transaction(models.Model):
 
         # Ensure that the sum of saving_amount and checking_amount equals the total amount
         if (self.saving_amount + self.checking_amount) != self.amount:
-            raise ValueError("The sum of saving_amount and checking_amount must equal the total amount.")
+            raise ValueError("The sum of saving portion and checking portion must equal the total amount.")
 
         # Handle saving account balance update if needed
         saving_account = Saving_Account.objects.first()  # Assuming one Saving Account
