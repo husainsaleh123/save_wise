@@ -6,7 +6,7 @@ from django.views.generic import ListView, DetailView # add these
 from .models import Goal, Saving_Account, Checking_Account, Transaction
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from datetime import date
@@ -53,23 +53,35 @@ class GoalForm(forms.ModelForm):
         return self.cleaned_data['status']
 
 
-class GoalCreate(CreateView):
+class GoalCreate(LoginRequiredMixin, CreateView):
     model = Goal
-    form_class = GoalForm  # Use the custom form
-    success_url = '/goals/'  # Redirect to the goals index page after successful creation
+    form_class = GoalForm
+    success_url = '/goals/'
 
-    @login_required
     def form_valid(self, form):
-        # Assign the logged in user (self.request.user)
-        form.instance.user = self.request.user  # form.instance is the cat
-        # Let the CreateView do its job as usual
+        form.instance.user = self.request.user
         return super().form_valid(form)
 
+
+class TransactionCreate(LoginRequiredMixin, CreateView):
+    model = Transaction
+    fields = ['name','transaction_type','description','saving_goal',
+              'amount','saving_amount','checking_amount','transaction_date']
+    success_url = '/transactions/'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        try:
+            return super().form_valid(form)
+        except ValueError as e:
+            form.add_error(None, str(e))
+            return self.form_invalid(form)
+        
 # Define the home view function
 class Home(LoginView):
     template_name = 'home.html'
 
-@login_required
+
 # Create a new view to list both Saving and Checking accounts
 def accounts_list(request):
     # Fetch all saving and checking accounts
@@ -82,7 +94,7 @@ def accounts_list(request):
         'checking_accounts': checking_accounts
     })
 
-@login_required
+
 def goal_index(request):
     goals = Goal.objects.filter(user=request.user)
     for g in goals:
@@ -92,7 +104,7 @@ def goal_index(request):
             g.progress = 0
     return render(request, 'goals/index.html', {'goals': goals})
 
-@login_required
+
 def goal_detail(request, goal_id):
     # Fetch the specific goal using the goal_id
     goal = get_object_or_404(Goal, id=goal_id)
@@ -127,7 +139,7 @@ class GoalDelete(DeleteView):
     model = Goal
     success_url = '/goals/'
 
-@login_required
+
 def saving_account_list(request):
     # Fetch all accounts from the database
     saving_accounts = Saving_Account.objects.all()
@@ -136,7 +148,7 @@ def saving_account_list(request):
 class SavingAccountDetail(DetailView):
     model = Saving_Account
 
-@login_required
+
 def checking_account_list(request):
     # Fetch all accounts from the database
     checking_accounts = Checking_Account.objects.all()
@@ -151,7 +163,6 @@ class TransactionCreate(CreateView):
               'amount', 'saving_amount', 'checking_amount', 'transaction_date']
     success_url = '/transactions/'  # Redirect to the transaction list after successful creation
 
-    @login_required
     def form_valid(self, form):
             try:
                 form.save()  # This will call the model's save() method
@@ -180,7 +191,6 @@ class TransactionUpdate(UpdateView):
               'amount','saving_amount','checking_amount','transaction_date']
     success_url = '/transactions/'  # Redirect to the transaction list after successful update
 
-    @login_required
     def form_valid(self, form):
             
             try:
@@ -196,7 +206,6 @@ class TransactionDelete(DeleteView):
     model = Transaction
     success_url = '/transactions/'  # Redirect to the transaction list after successful deletion
 
-    @login_required
     def delete(self, request, *args, **kwargs):
         # Fetch the transaction to be deleted
         transaction = self.get_object()

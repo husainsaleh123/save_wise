@@ -3,7 +3,6 @@ from django.urls import reverse
 from datetime import date
 from django.utils import timezone
 from decimal import Decimal  # Ensure we are importing Decimal
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 class Goal(models.Model):
@@ -63,7 +62,6 @@ class Transaction(models.Model):
     checking_amount = models.DecimalField(max_digits=10, decimal_places=3, default=Decimal('0.000'))  # Use Decimal
     transaction_date = models.DateField(default=timezone.localdate)
 
-    @login_required
     def save(self, *args, **kwargs):
         # If it's an update, get the old transaction data
         if self.pk:
