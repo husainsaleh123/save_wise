@@ -4,7 +4,6 @@ from django.urls import path
 from . import views # Import views to connect routes to view functions
 
 urlpatterns = [
-   path('home/', views.home, name='home'),
    path('goals/', views.goal_index, name='goal-index'),
    path('goals/<int:goal_id>/', views.goal_detail, name='goal-detail'),
    path('goals/create/', views.GoalCreate.as_view(), name='goal-create'),
@@ -21,4 +20,6 @@ urlpatterns = [
    path('transactions/<int:pk>/', views.TransactionDetail.as_view(), name='transaction-detail'),
    path('transactions/<int:pk>/update/', views.TransactionUpdate.as_view(), name='transaction-update'),
    path('transactions/<int:pk>/delete/', views.TransactionDelete.as_view(), name='transaction-delete'),
+   path('', views.Home.as_view(), name='home'),
+   path('accounts/signup/', views.signup, name='signup'),
 ]

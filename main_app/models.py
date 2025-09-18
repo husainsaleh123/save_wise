@@ -3,6 +3,8 @@ from django.urls import reverse
 from datetime import date
 from django.utils import timezone
 from decimal import Decimal  # Ensure we are importing Decimal
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 class Goal(models.Model):
     image = models.ImageField(upload_to='goal_images/', blank=True, null=True)
@@ -12,6 +14,7 @@ class Goal(models.Model):
     amount_saved = models.DecimalField(max_digits=10, decimal_places=3, default=Decimal('0.000'))  # Use Decimal
     target_date = models.DateField()
     status = models.CharField(max_length=100)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -60,6 +63,7 @@ class Transaction(models.Model):
     checking_amount = models.DecimalField(max_digits=10, decimal_places=3, default=Decimal('0.000'))  # Use Decimal
     transaction_date = models.DateField(default=timezone.localdate)
 
+    @login_required
     def save(self, *args, **kwargs):
         # If it's an update, get the old transaction data
         if self.pk:
@@ -138,6 +142,7 @@ class Transaction(models.Model):
 
         # Now save the transaction
         super().save(*args, **kwargs)
+
 
     def delete(self, *args, **kwargs):
         # Case 1: If the transaction is linked to a goal

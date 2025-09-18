@@ -23,13 +23,23 @@
   </div>
  <nav>
   <ul>
+     {% if user.is_authenticated %}
     <li class="{% if request.path == '/home/' %}active{% endif %}"><a href="{% url 'home' %}">Home</a></li>
     <li class="{% if request.path == '/goals/' %}active{% endif %}"><a href="{% url 'goal-index' %}">Goals</a></li>
     <li class="{% if request.path == '/transactions/' %}active{% endif %}"><a href="{% url 'transaction-index'  %}">Transactions</a></li>
     <li class="{% if request.path == '/accounts_balance/' %}active{% endif %}"><a href="{% url 'account-list'  %}">Accounts</a></li>
   </ul>
 </nav>
-  <button class="logout-button">Logout</button>
+    <li>
+    <form id="logout-form" method="post" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <button type="submit">Logout</button>
+    </form>
+  </li>
+   {% else %}
+  <li><a href="{% url 'home' %}">Login</a></li>
+  <li><a href="{% url 'signup' %}">Sign Up</a></li>
+   {% endif %}
 </header>
     <main>
      {% block content %} 
