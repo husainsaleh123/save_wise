@@ -139,13 +139,18 @@ This model tracks every financial transaction (either income or expenditure):
 
 <br>
 
-**4. Accounts model**
+**4. Checking_Account model**
 
 This model tracks every financial transaction (either income or expenditure):
 
-- id (Primary Key, Integer)
-- user_id (Foreign Key -> User, Integer)
-(Relationship to the user)
+- name (String, enum: ‘Savings’, ‘Checking’)
+- balance (Integer, automatically updated)
+- last_updated (date, automatically changed)
+
+**5. Saving_Account model**
+
+This model tracks every financial transaction (either income or expenditure):
+
 - name (String, enum: ‘Savings’, ‘Checking’)
 - balance (Integer, automatically updated)
 - last_updated (date, automatically changed)
@@ -158,6 +163,10 @@ This model tracks every financial transaction (either income or expenditure):
 
 <br>
 
-## Project Structure 📂:
+### Figma 🎨
 
-(Will add it later too)
+(https://www.figma.com/design/QU6hWFrq6Ry3QQaCisAPIj/Untitled?node-id=0-1&t=Xpxll3Ms3TAV4Zg2-1)
+
+### Trello 📃
+
+https://trello.com/b/fCx1uhGm/project-4-python-django

@@ -24,7 +24,7 @@
   </div>
  <nav>
   <ul>
-    <li class="{% if request.path == '/home/' %}active{% endif %}"><a href="{% url 'home' %}">Home</a></li>
+    <li class="{% if request.path == '/' %}active{% endif %}"><a href="{% url 'home' %}">Home</a></li>
     <li class="{% if request.path == '/goals/' %}active{% endif %}"><a href="{% url 'goal-index' %}">Goals</a></li>
     <li class="{% if request.path == '/transactions/' %}active{% endif %}"><a href="{% url 'transaction-index'  %}">Transactions</a></li>
     <li class="{% if request.path == '/accounts_balance/' %}active{% endif %}"><a href="{% url 'account-list'  %}">Accounts</a></li>

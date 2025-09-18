@@ -96,6 +96,7 @@ def accounts_list(request):
 
 
 def goal_index(request):
+    # Fetch only the goals for the current logged-in user
     goals = Goal.objects.filter(user=request.user)
     for g in goals:
         try:
@@ -103,7 +104,6 @@ def goal_index(request):
         except Exception:
             g.progress = 0
     return render(request, 'goals/index.html', {'goals': goals})
-
 
 def goal_detail(request, goal_id):
     # Fetch the specific goal using the goal_id
@@ -184,24 +184,25 @@ class TransactionDetail(DetailView):
     model = Transaction
     template_name = 'main_app/transaction_detail.html'
     context_object_name = 'transaction'
-
-class TransactionUpdate(UpdateView):
+    
+class TransactionUpdate(LoginRequiredMixin, UpdateView):
     model = Transaction
     fields = ['name','transaction_type','description','saving_goal',
               'amount','saving_amount','checking_amount','transaction_date']
-    success_url = '/transactions/'  # Redirect to the transaction list after successful update
+    success_url = '/transactions/'
+
+    def get_queryset(self):
+        return Transaction.objects.filter(user=self.request.user)
 
     def form_valid(self, form):
-            
-            try:
-                form.save()  # This will call the model's save() method
-            except ValueError as e:
-                form.add_error('saving_amount', str(e))  # Add error to saving_amount field
-                form.add_error('checking_amount', str(e))  # Add error to checking_amount field
-                return self.form_invalid(form)  # Redisplay the form with errors
+        form.instance.user = self.request.user
+        try:
             return super().form_valid(form)
-            
-    
+        except ValueError as e:
+            form.add_error(None, str(e))
+            return self.form_invalid(form)
+        
+
 class TransactionDelete(DeleteView):
     model = Transaction
     success_url = '/transactions/'  # Redirect to the transaction list after successful deletion
