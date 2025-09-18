@@ -134,6 +134,7 @@
 .amount-row strong { font-weight: 700; }
 
 /* Progress bar */
+/* Progress bar */
 .progress {
   position: relative;
   height: 18px;
@@ -149,7 +150,9 @@
   background: #20c56c;              /* green fill */
   border-radius: inherit;
   transition: width 280ms ease;
+  width: calc(var(--progress-percentage) * 1%); /* Calculate width based on the percentage */
 }
+
 .progress-pill {
   position: absolute;
   top: -26px;
@@ -165,6 +168,19 @@
   background: #20c56c;
   border-radius: 999px;
   pointer-events: none;
+  text-align: center;
+  width: auto;
+}
+
+/* Layout for percentage text */
+.progress-percentage {
+  position: absolute;
+  top: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffffff;
 }
 
 .goal-view-btn {
@@ -210,8 +226,10 @@
 }
 
 .add-goal-btn a {
+  font-family: 'Poppins',sans-serif;
   color: white;
   text-decoration: none;
+  font-weight: 500;
 }
 
 /* Empty state */

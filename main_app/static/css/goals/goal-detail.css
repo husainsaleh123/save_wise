@@ -1,3 +1,5 @@
+/* goal-detail.css */
+
 /* Layout */
 .page-header {
   padding: 24px 20px 10px;
@@ -164,13 +166,48 @@
   opacity: .8;
   padding: 12px 4px;
 }
-
-/* Responsive tweak */
-@media (max-width: 560px) {
-  .goal-card {
-    grid-template-columns: 72px 1fr;
-    padding: 14px;
-  }
-  .goal-thumb { width: 72px; height: 72px; }
-  .goal-title { font-size: 20px; }
+/* Goal Action Buttons */
+.goal-actions {
+  margin-left:10%;
+  display: flex;
+  justify-content: flex-start;  /* Align buttons to the left */
+  gap: 20px;  /* Space between the buttons */
 }
+
+.goal-actions .btn {
+  color: white;
+  background-color: rgb(60, 60, 255);
+  padding: 12px 24px;  /* Smaller padding */
+  font-size: 16px;  /* Smaller font size */
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: auto;  /* Make the buttons only as wide as the content */
+  display: inline-block;
+}
+
+/* Edit Button (Orange) */
+.goal-actions .btn.warn {
+  background-color: #f39c12;  /* Orange background */
+  color: white;
+  border: none;
+}
+
+.goal-actions .btn.warn:hover {
+  background-color: #e67e22;  /* Darker shade when hovering */
+}
+
+/* Delete Button (Red) */
+.goal-actions .btn.danger {
+  background-color: #e74c3c;  /* Red background */
+  color: white;
+  border: none;
+}
+
+.goal-actions .btn.danger:hover {
+  background-color: #c0392b;  /* Darker red on hover */
+}
+

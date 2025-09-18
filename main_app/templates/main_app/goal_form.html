@@ -11,13 +11,15 @@
 
 {% block content %}
 <div class="page-header">
-  <h1>Turn your dreams into reality. Add a saving goal!</h1>
+  {% if not goal %}
+    <h1>Turn your dreams into reality. Add a saving goal!</h1>
+  {% else %}
+    <h1>Edit {{ goal.name }}</h1>
+  {% endif %}
+  
   <button class="back-btn">
       <a href="{% url 'goal-index' %}">Back to goals</a>     
   </button>
-  {% if goal %}
-    <h1>Edit {{ goal.name }}</h1>
-  {% endif %}
 </div>
 
 <form action="" method="post" class="goal-form-container" enctype="multipart/form-data">

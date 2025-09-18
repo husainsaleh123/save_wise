@@ -1,8 +1,10 @@
 /* static/css/account-list.css */
 .page-header{
-  align-items: center;
-  text-align: center;
-  margin: 80px auto 50px;
+  align-items: left;
+  text-align: left;
+  margin-left: 10%;
+  margin-top: 60px;
+  margin-bottom: 40px;
 }
 
 /* Table styles */

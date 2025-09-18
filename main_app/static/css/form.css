@@ -1,5 +1,5 @@
 /* General form styling */
-.goal-form-container {
+.goal-form-container, .transaction-form-container {
   width: 60%;
   margin: 20px auto 80px;
   padding: 20px;
@@ -7,34 +7,36 @@
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
-/* Styling for the back button */
+
+
+/* Page Header */
 .page-header {
-  width: 60%;
-  text-align: left;  /* Align text to the left */
-  margin: 70px auto 50px;
-  display: flex;  /* Flexbox to align items horizontally */
-  justify-content: space-between;  /* Space between h1 and back button */
-  align-items: center;  /* Align both text and button vertically */
+  display: flex;  /* Flexbox to align header and button horizontally */
+  justify-content: space-between;  /* Distribute space between title and button */
+  align-items: center;  
+  width:80%;  
+  margin: 50px auto 100px;
+  padding: 0 10px;  
 }
 
 .page-header h1 {
-  font-size: 27px;
-  font-weight: 700;
-  color: #2c3e50;
-  margin: 0;  /* Remove margins for better alignment */
+  font-size: 1.8rem;
+  color: #333;
+  font-weight: bold;
+  margin: 0;  /* Remove any margin */
 }
 
 .page-header .back-btn {
   font-family: 'Poppins',sans-serif;
-  background-color: #008080;  /* Teal background */
-  padding: 10px 20px;
+  background-color: #008080;
+  padding: 0.5rem 1rem;
   color: white;
-  font-size: 18px;
+  font-size: 1rem;
   font-weight: 500;
   border-radius: 12px;
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s;
 }
 
 .page-header .back-btn a {
@@ -43,8 +45,9 @@
 }
 
 .page-header .back-btn:hover {
-  background-color: #146565;  /* Darker shade when hovering */
+  background-color: #00796B;
 }
+
 
 /* Form Field Styling */
 .form-field {
@@ -59,9 +62,11 @@
   margin-bottom: 8px;
 }
 
-.form-field input, .form-field select, .form-field textarea {
+.form-field input,
+.form-field select,
+.form-field textarea {
   margin: 0 auto;
-  width: 97%;
+  width: 95%;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -74,7 +79,6 @@
   display: block;
   margin-top: 6px;
 }
-
 
 /* Remove border from the goal-image file input */
 .form-field input[type="file"] {
@@ -97,7 +101,7 @@ form .form-field label[for="goal-image"] {
 
 /* Submit Button */
 .btn.submit {
-  font-family: 'Poppins',sans-serif;
+  font-family: 'Poppins', sans-serif;
   margin-top: 20px;
   width: 100%;
   padding: 12px;
@@ -115,8 +119,143 @@ form .form-field label[for="goal-image"] {
   background-color: #146565;
 }
 
-@media (max-width: 560px) {
-  .goal-form-container {
+
+/* Form Container */
+.transaction-form-container {
+  background-color: #E0F7FA;  /* Light blue background */
+  padding: 2rem;
+  border-radius: 12px;
+  width: 80%;
+  margin: 2rem auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Page Header for Transaction */
+.page-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.page-header h1 {
+  font-size: 1.8rem;
+  color: #333;
+  font-weight: bold;
+}
+
+.back-btn {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 13px;
+}
+
+/* Form Fields */
+.form-field {
+  margin-bottom: 1.5rem;
+}
+
+.form-field label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 97%;
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  background-color: #ffffff;
+}
+
+.form-field input[type="file"] {
+  border: none;
+}
+
+.form-field textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Small Description under Fields */
+.form-field small {
+  display: block;
+  margin-top: 0.5rem;
+  color: #777;
+  font-size: 0.9rem;
+}
+
+/* Error messages */
+.errorlist {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 0.5rem;
+}
+
+.errorlist li {
+  color: red;
+  font-size: 0.9rem;
+}
+
+/* Submit Button */
+.btn.submit {
+  background-color: #009688;
+  color: white;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn.submit:hover {
+  background-color: #00796B;
+}
+
+/* Aligning the form inputs and labels */
+.transaction-form-container input,
+.transaction-form-container select,
+.transaction-form-container textarea,
+.transaction-form-container button {
+  margin-bottom: 1rem;
+}
+
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .goal-form-container, .transaction-form-container {
     width: 90%;
+  }
+
+  .page-header {
+    flex-direction: column;  /* Stack header elements vertically on smaller screens */
+    text-align: center;  /* Center-align text on mobile */
+  }
+
+  .page-header h1 {
+    font-size: 1.5rem;  /* Smaller font size for mobile */
+    margin-bottom: 1rem;
+  }
+
+  .page-header .back-btn {
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .goal-form-container, .transaction-form-container {
+    width: 100%;
+  }
+
+  .page-header {
+    text-align: center; /* Center align the header and button on mobile */
+    flex-direction: column; /* Stack header elements vertically */
   }
 }

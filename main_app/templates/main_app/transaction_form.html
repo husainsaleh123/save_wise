@@ -13,14 +13,16 @@
 
 {% block content %}
 <div class="page-header">
-  <h1>See where your money goes. Add a transaction!</h1>
+  {% if not transaction %}
+    <h1>See where your money goes. Add a transaction!</h1>
+  {% else %}
+    <h1>Edit {{ transaction.name }}</h1>
+  {% endif %}
   <button class="back-btn">
     <a href="{% url 'transaction-index' %}">Back to transactions</a>     
   </button>
-  {% if transaction %}
-    <h1>Edit {{ transaction.name }}</h1>
-  {% endif %}
 </div>
+
 
 {% if form.non_field_errors %}
   <ul class="errorlist">

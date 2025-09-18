@@ -2,68 +2,57 @@
 {% load static %}
 
 {% block head %}
-  <!-- (Optional) If you’ll style this page separately -->
   <link rel="stylesheet" href="{% static 'css/transactions/transaction-detail.css' %}">
 {% endblock %}
 
 {% block content %}
-<section class="page-header">
-  <h1>Details for {{ transaction.name }}</h1>
+<section class="transaction-detail-header">
+  <h3>Details for {{ transaction.name }} </h3>
 </section>
 
-<section class="goal-container">  
-  <article class="goal-card">
-    <div class="goal-thumb" aria-hidden="true"></div>
-
-    <div class="goal-info">
-      <header class="goal-top">
-        <h2 class="goal-title">{{ transaction.name }}</h2>
-        <span class="date-chip">
-          {{ transaction.created_at|date:"n/j/Y" }}
+<section class="transaction-detail-container">
+  <div class="transaction-detail-card">
+    <div class="transaction-detail-thumb" aria-hidden="true"></div>
+    
+    <div class="transaction-detail-info">
+      <header class="transaction-detail-top">
+        <h2 class="transaction-detail-title">{{ transaction.name }}</h2>
+        <span class="date-chip-detail">
+          {{ transaction.transaction_date|date:"Y-m-d" }}
         </span>
       </header>
 
-      <div class="goal-status">
+      <div class="transaction-detail-type">
         <span class="dot"></span>
-        <span class="status-text">{{ transaction.transaction_type|capfirst }}</span>
+        <span class="status-text-detail">{{ transaction.transaction_type|capfirst }}</span>
       </div>
 
-      <p class="goal-desc">
+      <p class="transaction-detail-desc">
         {{ transaction.description }}
       </p>
 
-      {% if transaction.saving_goal %}
-      <p class="amount-row">
-        <strong>Linked Goal:</strong>
-        <a href="{% url 'goal-detail' transaction.saving_goal.id %}">
-          {{ transaction.saving_goal.name }}
-        </a>
-      </p>
-      {% endif %}
-
-      <p class="amount-row">
-        <strong>Total Amount:</strong> {{ transaction.amount|floatformat:3 }}
+      <p class="amount-row-detail">
+        <strong>Total Amount:</strong>
+        <span>{{ transaction.amount|floatformat:3 }}</span>
       </p>
 
-      <p class="amount-row">
-        <strong>Saving Portion:</strong> {{ transaction.saving_amount|floatformat:3 }}
+      <p class="amount-row-detail">
+        <strong>Savings Amount:</strong>
+        <span>{{ transaction.saving_amount|floatformat:3 }}</span>
       </p>
 
-      <p class="amount-row">
-        <strong>Checking Portion:</strong> {{ transaction.checking_amount|floatformat:3 }}
+      <p class="amount-row-detail">
+        <strong>Checking Amount:</strong>
+        <span>{{ transaction.checking_amount|floatformat:3 }}</span>
       </p>
-
-      {% if transaction.image %}
-        <div style="margin-top:12px;">
-          <img src="{{ transaction.image.url }}" alt="{{ transaction.name }}" style="max-width:100%; border-radius:12px;">
-        </div>
-      {% endif %}
     </div>
-  </article>
+  </div>
+
+   <div class="transaction-detail-actions">
+        <a href="{% url 'transaction-update' transaction.id %}" class="btn update">Edit</a>
+        <a href="{% url 'transaction-delete' transaction.id %}" class="btn delete">Delete</a>
+        <a href="{% url 'transaction-index' %}" class="btn back">Back</a> 
+  </div>
 </section>
 
-<div class="goal-actions">
-  <a href="{% url 'transaction-update' transaction.id %}" class="btn warn">Edit</a>
-  <a href="{% url 'transaction-delete' transaction.id %}" class="btn danger">Delete</a>
-</div>
 {% endblock %}

@@ -48,5 +48,6 @@
   <div class="goal-actions">
     <a href="{% url 'goal-update' goal.id %}" class="btn warn">Edit</a>
     <a href="{% url 'goal-delete' goal.id %}" class="btn danger">Delete</a>
+    <a href="{% url 'goal-index' %}" class="btn back">Back</a> 
   </div>
 {% endblock %}
