@@ -133,54 +133,37 @@
 }
 .amount-row strong { font-weight: 700; }
 
-/* Progress bar */
-/* Progress bar */
+/* Progress bar container */
 .progress {
   position: relative;
-  height: 18px;
-  background: #ffffff;
-  border-radius: 999px;
-  border: 1px solid #e6e6e6;
-  overflow: hidden;
-  margin-top: 6px;
-  margin-bottom: 10px;
-}
-.progress-fill {
-  height: 100%;
-  background: #20c56c;              /* green fill */
-  border-radius: inherit;
-  transition: width 280ms ease;
-  width: calc(var(--progress-percentage) * 1%); /* Calculate width based on the percentage */
+  height: 20px;
+  background: #e6e6e6; /* Light gray background */
+  border-radius: 10px; /* Rounded corners */
+  margin-top: 10px;
+  margin-bottom: 12px;
+  width: 100%;
 }
 
+/* Progress fill (Green) */
+.progress-fill {
+  height: 100%;
+  background: #20c56c; /* Green fill color */
+  border-radius: 10px;
+  transition: width 0.3s ease-in-out;
+}
+
+/* Progress pill with percentage */
 .progress-pill {
   position: absolute;
   top: -26px;
-  min-width: 36px;
-  height: 22px;
-  padding: 0 8px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: 700;
-  color: #ffffff;
-  background: #20c56c;
-  border-radius: 999px;
-  pointer-events: none;
-  text-align: center;
-  width: auto;
-}
-
-/* Layout for percentage text */
-.progress-percentage {
-  position: absolute;
-  top: 3px;
   left: 50%;
   transform: translateX(-50%);
+  background: #20c56c;
+  color: white;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 50px;
   font-size: 14px;
-  font-weight: bold;
-  color: #ffffff;
 }
 
 .goal-view-btn {
