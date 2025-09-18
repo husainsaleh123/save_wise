@@ -85,6 +85,11 @@ def goal_index(request):
 def goal_detail(request, goal_id):
     # Fetch the specific goal using the goal_id
     goal = get_object_or_404(Goal, id=goal_id)
+    try:
+        goal.progress = max(0, min(100, round((goal.amount_saved / goal.target_amount) * 100))) if goal.target_amount else 0
+    except Exception:
+        goal.progress = 0
+    
     return render(request, 'goals/detail.html', {'goal': goal})
 
 class GoalUpdate(UpdateView):

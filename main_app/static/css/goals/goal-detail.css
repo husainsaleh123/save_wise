@@ -1,17 +1,18 @@
 /* goal-detail.css */
 
-/* Layout */
-.page-header {
+/* Layout for goal page header */
+.goal-page-header {
   padding: 24px 20px 10px;
 }
-.page-header h1 {
+
+.goal-page-header h1 {
   text-align: center;
   font-size: 40px;
   margin: 50px auto 10px;
 }
 
-/* Card grid */
-.goal-container {
+/* Goal details container */
+.goal-details-container {
   padding: 16px 20px 48px;
   display: grid;
   gap: 18px;
@@ -20,68 +21,60 @@
   z-index: -1;
 }
 
-/* Card */
-.goal-card {
+/* Goal detail card */
+.goal-card-detail {
   display: grid;
-  grid-template-columns: 180px 1fr;  /* Image column adjusted */
-  gap: 50px;  /* Increased gap between image and content */
+  grid-template-columns: 180px 1fr;
+  gap: 50px;
   background: #def6f6;
   border: 1.5px solid #cdeeee;
   border-radius: 18px;
   padding: 18px;
-  box-shadow: 0 2px 0 rgba(0,0,0,0.04);
-  overflow: hidden; /* Ensure content doesn't overflow */
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.04);
+  overflow: hidden;
   z-index: -1;
   margin-bottom: 12px;
 }
 
-
-/* Thumbnail (placeholder block) */
-.goal-thumb {
+/* Goal image placeholder */
+.goal-image {
   width: 180px;
   height: 180px;
   border-radius: 14px;
   background: #d3d6db;
-  object-fit: cover;  /* Ensure the image is proportionally fitting */
-  margin-right: 15px;  /* Add a bit more gap between the image and text */
+  object-fit: cover;
+  margin-right: 15px;
 }
 
-
-/* Right side */
-.goal-info { 
-  display: flex; 
+/* Goal info section */
+.goal-info-detail {
+  display: flex;
   flex-direction: column;
   gap: 12px;
-  flex-wrap: wrap;  /* Allow wrap to prevent overflow */
-  z-index: 0; 
+  flex-wrap: wrap;
+  z-index: 0;
 }
 
-.card-container a{
-    cursor: pointer;
-    text-decoration: none;
-}
-
-
-/* Top row: title + date chip */
-.goal-top {
+/* Header for goal details */
+.goal-header-detail {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 15px;
-  background-color:#def6f6;
-  flex-wrap: wrap;  /* Allow wrap to prevent overflow */
+  background-color: #def6f6;
+  flex-wrap: wrap;
   z-index: 0;
   color: #000000;
 }
 
-.goal-title {
+.goal-title-detail {
   font-size: 24px;
   margin: 0;
-  flex-grow: 1; /* Allow title to take up remaining space */
-  white-space: nowrap; /* Prevent text wrapping */
+  flex-grow: 1;
+  white-space: nowrap;
 }
 
-.date-chip {
+.goal-date-chip {
   font-size: 16px;
   padding: 6px 12px;
   border: 1.6px solid #1f2a2a;
@@ -92,8 +85,8 @@
   white-space: nowrap;
 }
 
-/* Status line */
-.goal-status {
+/* Goal status */
+.goal-status-detail {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -101,113 +94,120 @@
   font-weight: 600;
 }
 
-.goal-status .dot {
+.goal-status-detail .dot-status {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #ff9900;              /* green dot */
+  background: #ff9900;
 }
-.status-text { font-weight: 600; }
 
-/* Description */
-.goal-desc {
+.status-text-detail {
+  font-weight: 600;
+}
+
+/* Goal description */
+.goal-description-detail {
   margin: 0;
   color: #5c6a6a;
   font-style: italic;
 }
 
-/* Amount row */
-.amount-row {
+/* Goal amount saved row */
+.goal-amount-row {
   color: #1f2a2a;
   margin: 0;
   display: flex;
   gap: 8px;
   align-items: baseline;
 }
-.amount-row strong { font-weight: 700; }
+.goal-amount-row strong {
+  font-weight: 700;
+}
 
-/* Progress bar */
-.progress {
+/* Progress bar container */
+.goal-progress-wrapper {
   position: relative;
-  height: 18px;
-  background: #ffffff;
-  border-radius: 999px;
-  border: 1px solid #e6e6e6;
-  overflow: hidden;
-  margin-top: 6px;
-  margin-bottom: 10px;
+  height: 20px;
+  background: #e6e6e6; /* Light gray background */
+  border-radius: 10px; /* Rounded corners */
+  margin-top: 10px;
+  margin-bottom: 12px;
+  width: 100%;
 }
-.progress-fill {
+
+/* Progress fill (Green) */
+.goal-progress-bar {
   height: 100%;
-  background: #20c56c;              /* green fill */
-  border-radius: inherit;
-  transition: width 280ms ease;
+  background: #20c56c; /* Green fill color */
+  border-radius: 10px;
+  transition: width 0.3s ease-in-out;
 }
-.progress-pill {
+
+/* Progress pill with percentage */
+.goal-progress-text {
   position: absolute;
   top: -26px;
-  min-width: 36px;
-  height: 22px;
-  padding: 0 8px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: 700;
-  color: #ffffff;
+  left: 50%;
+  transform: translateX(-50%);
   background: #20c56c;
-  border-radius: 999px;
-  pointer-events: none;
+  color: white;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 50px;
+  font-size: 14px;
 }
 
-/* Empty state */
-.empty {
-  color: #556;
-  opacity: .8;
-  padding: 12px 4px;
-}
-/* Goal Action Buttons */
+/* Buttons for goal actions */
 .goal-actions {
-  margin-left:10%;
+  margin-left: 10%;
   display: flex;
-  justify-content: flex-start;  /* Align buttons to the left */
-  gap: 20px;  /* Space between the buttons */
+  justify-content: flex-start;
+  gap: 20px;
 }
 
 .goal-actions .btn {
-  color: white;
-  background-color: rgb(60, 60, 255);
-  padding: 12px 24px;  /* Smaller padding */
-  font-size: 16px;  /* Smaller font size */
+  padding: 12px 24px;
+  font-size: 16px;
   font-weight: 600;
   text-decoration: none;
   text-align: center;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  width: auto;  /* Make the buttons only as wide as the content */
+  width: auto;
   display: inline-block;
 }
 
 /* Edit Button (Orange) */
-.goal-actions .btn.warn {
-  background-color: #f39c12;  /* Orange background */
+.goal-actions .btn.edit-btn {
+  background-color: #f39c12;
   color: white;
   border: none;
 }
 
-.goal-actions .btn.warn:hover {
-  background-color: #e67e22;  /* Darker shade when hovering */
+.goal-actions .btn.edit-btn:hover {
+  background-color: #e67e22;
 }
 
 /* Delete Button (Red) */
-.goal-actions .btn.danger {
-  background-color: #e74c3c;  /* Red background */
+.goal-actions .btn.delete-btn {
+  background-color: #e74c3c;
   color: white;
   border: none;
 }
 
-.goal-actions .btn.danger:hover {
-  background-color: #c0392b;  /* Darker red on hover */
+.goal-actions .btn.delete-btn:hover {
+  background-color: #c0392b;
+}
+
+/* Back Button (Blue) */
+.goal-actions .btn.back-btn {
+  background-color: #008CBA;
+  color: white;
+  border: none;
+}
+
+.goal-actions .btn.back-btn:hover {
+  background-color: #006f8b;
 }
 

@@ -13,29 +13,38 @@
 {% endblock %}
 
 {% block content %}
-  <section class="page-header">
+  <section class="goal-page-header">
     <h1>Details for {{ goal.name }}</h1>
   </section>
 
-  <section class="goal-container">
-    <article class="goal-card">
-      <div class="goal-thumb" aria-hidden="true"></div>
-      <div class="goal-info">
-        <header class="goal-top">
-          <h2 class="goal-title">{{ goal.name }}</h2>
-          <span class="date-chip">{{ goal.target_date|date:"n/j/Y" }}</span>
+  <section class="goal-details-container">
+    <article class="goal-card-detail">
+      <div class="goal-image" aria-hidden="true"></div>
+      <div class="goal-info-detail">
+        <header class="goal-header-detail">
+          <h2 class="goal-title-detail">{{ goal.name }}</h2>
+          <span class="goal-date-chip">
+            {{ goal.target_date|date:"n/j/Y" }}
+          </span>
         </header>
 
-        <div class="goal-status">
-          <span class="dot"></span>
-          <span class="status-text">{{ goal.status }}</span>
+        <div class="goal-status-detail">
+          <span class="dot-status"></span>
+          <span class="status-text-detail">{{ goal.status }}</span>
         </div>
 
-        <p class="goal-desc">{{ goal.description }}</p>
-        <p class="amount-row"><strong>Amount saved:</strong> {{ goal.amount_saved|floatformat:3 }}/{{ goal.target_amount|floatformat:3 }}</p>
-        <div class="progress">
-          <div class="progress-fill"></div>
-          <span class="progress-pill">{{ goal.progress }}%</span>
+        <p class="goal-description-detail">{{ goal.description }}</p>
+
+        <p class="goal-amount-row">
+          <strong>Amount saved:</strong> {{ goal.amount_saved|floatformat:3 }}/{{ goal.target_amount|floatformat:3 }}
+        </p>
+
+        <!-- Progress bar -->
+        <div class="goal-progress-wrapper">
+          <div class="goal-progress-bar" style="width: {{ goal.progress }}%"></div>
+          <span class="goal-progress-text">
+            {{ goal.progress }}%
+          </span>
         </div>
 
         {% if goal.image %}
@@ -46,8 +55,8 @@
   </section>
 
   <div class="goal-actions">
-    <a href="{% url 'goal-update' goal.id %}" class="btn warn">Edit</a>
-    <a href="{% url 'goal-delete' goal.id %}" class="btn danger">Delete</a>
-    <a href="{% url 'goal-index' %}" class="btn back">Back</a> 
+    <a href="{% url 'goal-update' goal.id %}" class="btn edit-btn">Edit</a>
+    <a href="{% url 'goal-delete' goal.id %}" class="btn delete-btn">Delete</a>
+    <a href="{% url 'goal-index' %}" class="btn back-btn">Back</a>
   </div>
 {% endblock %}
