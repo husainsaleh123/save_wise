@@ -1,24 +1,25 @@
-/* static/css/goals/goal-index.css */
+/* goal-index.css */
 
-.page-header {
+/* Page header styles */
+.goal-page-header {
   padding: 10px 20px 10px;
   width: 80%;
   margin: 50px auto 10px;
-  text-align: left; /* Align text to the left */
+  text-align: left;
   display: flex;
-  justify-content: space-between; /* Space between Goal List and Add goal */
-  align-items: center; /* Align items vertically */
+  justify-content: space-between;
+  align-items: center;
 }
 
-.page-header h3 {
+.goal-page-header h3 {
   font-size: 40px;
-  margin: 0; /* No margins to align better */
-  flex-grow: 1; /* Allow the title to take space */
+  margin: 0;
+  flex-grow: 1;
   color: #000;
 }
 
-/* Card grid */
-.card-container {
+/* Card container layout */
+.goal-card-container {
   padding: 16px 20px 48px;
   display: grid;
   gap: 18px;
@@ -27,56 +28,61 @@
   z-index: -1;
 }
 
-/* Card */
+/* Card container layout */
+.goal-card-container a {
+  text-decoration: none;
+}
+
+
+/* Goal card layout */
 .goal-card {
   display: grid;
-  grid-template-columns: 180px 1fr;  /* Image column adjusted */
-  gap: 50px;  /* Increased gap between image and content */
+  grid-template-columns: 180px 1fr;  /* Left: Image, Right: Content */
+  gap: 50px;
   background: #def6f6;
   border: 1.5px solid #cdeeee;
   border-radius: 18px;
   padding: 18px;
-  box-shadow: 0 2px 0 rgba(0,0,0,0.04);
-  overflow: hidden; /* Ensure content doesn't overflow */
-  z-index: -1;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.04);
+  overflow: hidden;
   margin-bottom: 12px;
 }
 
-
-/* Thumbnail (placeholder block) */
-.goal-thumb {
-  width: 180px;
-  height: 180px;
-  border-radius: 14px;
-  background: #d3d6db;
-  object-fit: cover;  /* Ensure the image is proportionally fitting */
-  margin-right: 15px;  /* Add a bit more gap between the image and text */
+/* Goal image container */
+.goal-image-container {
+  width: 100%;
+  height: 100%;
+  max-width: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+/* Goal image styles */
+.goal-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* Ensure proper aspect ratio */
+  border-radius: 14px;
+}
 
-/* Right side */
-.goal-info { 
-  display: flex; 
+/* Goal information section */
+.goal-info {
+  display: flex;
   flex-direction: column;
   gap: 12px;
-  flex-wrap: wrap;  /* Allow wrap to prevent overflow */
-  z-index: 0; 
+  flex-wrap: wrap;
+  z-index: 0;
 }
 
-.card-container a{
-    text-decoration: none;
-    cursor:auto;
-}
-
-
-/* Top row: title + date chip */
-.goal-top {
+/* Goal title and date styles */
+.goal-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 15px;
-  background-color:#def6f6;
-  flex-wrap: wrap;  /* Allow wrap to prevent overflow */
+  background-color: #def6f6;
+  flex-wrap: wrap;
   z-index: 0;
   color: #000000;
 }
@@ -84,11 +90,11 @@
 .goal-title {
   font-size: 24px;
   margin: 0;
-  flex-grow: 1; /* Allow title to take up remaining space */
-  white-space: nowrap; /* Prevent text wrapping */
+  flex-grow: 1;
+  white-space: nowrap;
 }
 
-.date-chip {
+.goal-date-chip {
   font-size: 16px;
   padding: 6px 12px;
   border: 1.6px solid #1f2a2a;
@@ -99,7 +105,7 @@
   white-space: nowrap;
 }
 
-/* Status line */
+/* Goal status line */
 .goal-status {
   display: flex;
   align-items: center;
@@ -112,18 +118,21 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #ff9900;              /* green dot */
+  background: #ff9900;              /* Orange dot */
 }
-.status-text { font-weight: 600; }
 
-/* Description */
+.status-text {
+  font-weight: 600;
+}
+
+/* Goal description */
 .goal-desc {
   margin: 0;
   color: #5c6a6a;
   font-style: italic;
 }
 
-/* Amount row */
+/* Amount saved row */
 .amount-row {
   color: #1f2a2a;
   margin: 0;
@@ -131,7 +140,9 @@
   gap: 8px;
   align-items: baseline;
 }
-.amount-row strong { font-weight: 700; }
+.amount-row strong {
+  font-weight: 700;
+}
 
 /* Progress bar container */
 .progress {
@@ -166,16 +177,17 @@
   font-size: 14px;
 }
 
+/* View goal button styles */
 .goal-view-btn {
-  font-family: 'Poppins',sans-serif;
+  font-family: 'Poppins', sans-serif;
   max-width: 15%; /* Adjust to a larger width */
-  padding: 10px 20px; /* Add more padding for a larger button */
-  border-radius: 12px; /* Slightly rounded corners */
+  padding: 10px 20px;
+  border-radius: 12px;
   cursor: pointer;
-  height: auto; /* Let the height adjust based on padding */
+  height: auto;
   color: white;
-  font-size: 18px; /* Larger font size */
-  font-weight: 500; /* Slightly bolder text */
+  font-size: 18px;
+  font-weight: 500;
   background-color: #008080; /* Green background */
   border: none;
   transition: background-color 0.3s ease;
@@ -186,22 +198,20 @@
   background-color: #146565; /* Darker shade when hovering */
 }
 
-
-
 /* Add goal button */
 .add-goal-btn {
   padding: 10px 20px; /* Button padding */
   background-color: #008080; /* Green background */
   color: white;
-  font-size: 18px; /* Same font size as title */
+  font-size: 18px;
   font-weight: 600;
   border-radius: 12px;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  height: 40px; /* Adjust the height */
-  line-height: 1; /* Align button text vertically */
-  margin-left: 20px; /* Space between text and button */
+  height: 40px;
+  line-height: 1;
+  margin-left: 20px;
 }
 
 .add-goal-btn:hover {
@@ -209,13 +219,13 @@
 }
 
 .add-goal-btn a {
-  font-family: 'Poppins',sans-serif;
+  font-family: 'Poppins', sans-serif;
   color: white;
   text-decoration: none;
   font-weight: 500;
 }
 
-/* Empty state */
+/* Empty state when no goals */
 .empty {
   color: #556;
   opacity: .8;
@@ -228,6 +238,11 @@
     grid-template-columns: 72px 1fr;
     padding: 14px;
   }
-  .goal-thumb { width: 72px; height: 72px; }
-  .goal-title { font-size: 20px; }
+  .goal-thumb {
+    width: 72px;
+    height: 72px;
+  }
+  .goal-title {
+    font-size: 20px;
+  }
 }

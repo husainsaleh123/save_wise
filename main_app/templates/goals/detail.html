@@ -19,7 +19,14 @@
 
   <section class="goal-details-container">
     <article class="goal-card-detail">
-      <div class="goal-image" aria-hidden="true"></div>
+      <div class="goal-image-container">
+        {% if goal.image %}
+          <img class="goal-image" src="{{ goal.image.url }}" alt="{{ goal.name }}">
+        {% else %}
+          <img class="goal-image" src="{% static 'images/default-image.jpg' %}" alt="Default Image">
+        {% endif %}
+      </div>
+
       <div class="goal-info-detail">
         <header class="goal-header-detail">
           <h2 class="goal-title-detail">{{ goal.name }}</h2>
@@ -46,10 +53,6 @@
             {{ goal.progress }}%
           </span>
         </div>
-
-        {% if goal.image %}
-          <img src="{{ goal.image.url }}" alt="{{ goal.name }}">
-        {% endif %}
       </div>
     </article>
   </section>

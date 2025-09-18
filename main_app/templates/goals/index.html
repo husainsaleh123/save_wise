@@ -8,55 +8,61 @@
 {% endblock %}
 
 {% block content %}
-<section class="page-header">
+<section class="goal-page-header">
   <h3>Goal List</h3>
-   <button class="add-goal-btn">
-      <a href="{% url 'goal-create' %}">+ Add goal</a>     
-   </button>
+  <button class="add-goal-btn">
+    <a href="{% url 'goal-create' %}">+ Add goal</a>     
+  </button>
 </section>
 
-<section class="card-container">
+<section class="goal-card-container">
   {% for goal in goals %}
     <a href="{% url 'goal-detail' goal.id %}">
-    <div class="goal-card">
-      <div class="goal-thumb" aria-hidden="true"></div>
-      <div class="goal-info">
-        <header class="goal-top">
-          <h2 class="goal-title">{{ goal.name }}</h2>
-          <span class="date-chip">
-            {{ goal.target_date|date:"n/j/Y" }}
-          </span>
-        </header>
-
-        <div class="goal-status">
-          <span class="dot"></span>
-          <span class="status-text">{{ goal.status }}</span>
+      <div class="goal-card">
+        <div class="goal-image-container">
+          {% if goal.image %}
+            <img class="goal-image" src="{{ goal.image.url }}" alt="{{ goal.name }}">
+          {% else %}
+            <img class="goal-image" src="{% static 'images/default-image.jpg' %}" alt="Default Image">
+          {% endif %}
         </div>
+        <div class="goal-info">
+          <header class="goal-header">
+            <h2 class="goal-title">{{ goal.name }}</h2>
+            <span class="goal-date-chip">
+              {{ goal.target_date|date:"n/j/Y" }}
+            </span>
+          </header>
 
-        <p class="goal-desc">
-          {{ goal.description }}
-        </p>
+          <div class="goal-status">
+            <span class="dot"></span>
+            <span class="status-text">{{ goal.status }}</span>
+          </div>
 
-        <p class="amount-row">
-          <strong>Amount saved:</strong>
-          <span>{{ goal.amount_saved|floatformat:3 }}/{{ goal.target_amount|floatformat:3 }}</span>
-        </p>
+          <p class="goal-desc">
+            {{ goal.description }}
+          </p>
 
-        <div class="progress">
-          <div class="progress-fill" style="width: {{ goal.progress }}%"></div>
-          <span class="progress-pill">
-            {{ goal.progress }}%
-          </span>
-        </div>
+          <p class="amount-row">
+            <strong>Amount saved:</strong>
+            <span>{{ goal.amount_saved|floatformat:3 }}/{{ goal.target_amount|floatformat:3 }}</span>
+          </p>
+
+          <div class="progress">
+            <div class="progress-fill" style="width: {{ goal.progress }}%"></div>
+            <span class="progress-pill">
+              {{ goal.progress }}%
+            </span>
+          </div>
 
           <button class="goal-view-btn">
             View goal
           </button>
+        </div>
       </div>
-    </div>
-  </a>
+    </a>
   {% empty %}
-  <p class="empty">No goals yet.</p>
+    <p class="empty">No goals yet.</p>
   {% endfor %}
 </section>
 
