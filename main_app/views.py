@@ -136,7 +136,7 @@ class CheckingAccountDetail(DetailView):
 
 class TransactionCreate(CreateView):
     model = Transaction
-    fields = ['image', 'name', 'transaction_type', 'description', 'saving_goal', 
+    fields = ['name', 'transaction_type', 'description', 'saving_goal', 
               'amount', 'saving_amount', 'checking_amount', 'transaction_date']
     success_url = '/transactions/'  # Redirect to the transaction list after successful creation
 
@@ -164,7 +164,7 @@ class TransactionDetail(DetailView):
 
 class TransactionUpdate(UpdateView):
     model = Transaction
-    fields = ['image','name','transaction_type','description','saving_goal',
+    fields = ['name','transaction_type','description','saving_goal',
               'amount','saving_amount','checking_amount','transaction_date']
     success_url = '/transactions/'  # Redirect to the transaction list after successful update
 

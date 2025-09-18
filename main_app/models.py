@@ -50,7 +50,6 @@ class Transaction(models.Model):
         (EXPENDITURE, 'Expenditure'),
     ]
 
-    image = models.ImageField(upload_to='transaction_images/', blank=True, null=True)
     name = models.CharField(max_length=200, default="Untitled Transaction")
     description = models.CharField(max_length=500, blank=True, null=True)
     transaction_type = models.CharField(max_length=20, choices=TRANSACTION_TYPE_CHOICES, default=INCOME)

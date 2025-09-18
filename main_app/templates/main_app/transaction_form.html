@@ -34,11 +34,6 @@
 <form action="" method="post" class="transaction-form-container" enctype="multipart/form-data">
   {% csrf_token %}
 
-  <div class="form-field">
-    <label for="{{ form.image.id_for_label }}">Transaction Image:</label>
-    {{ form.image }}
-  </div>
-
     <div class="form-field">
         <label for="transaction-title">Transaction Title</label>
         {{ form.name }}
